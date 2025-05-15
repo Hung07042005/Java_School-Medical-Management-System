@@ -26,4 +26,7 @@ Phần mềm Quản lý Y tế Học đường là một ứng dụng web đơn 
 4. Kiểm tra: Gõ `mvn -version` trong Command Prompt.
 
 ### Bước 3: Clone hoặc tải dự án
-- Nếu bạn đã có dự án tại `C:\My
+- Nếu bạn đã có dự án tại `C:\MyNewJavaProject\myproject`, bỏ qua bước này.
+- Nếu tải từ kho lưu trữ (Git), chạy:
+  ```bash
+  git clone <URL_repository>
