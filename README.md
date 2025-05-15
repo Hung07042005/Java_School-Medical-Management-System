@@ -29,4 +29,4 @@ Phần mềm Quản lý Y tế Học đường là một ứng dụng web đơn 
 - Nếu bạn đã có dự án tại `C:\MyNewJavaProject\myproject`, bỏ qua bước này.
 - Nếu tải từ kho lưu trữ (Git), chạy:
   ```bash
-  git clone <URL_repository>
+  git clone https://github.com/Hung07042005/Java_School-Medical-Management-System.git
