@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần mềm Quản lý Y tế Học đường</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Quản lý Y tế Học đường</h1>
+    <div class="container">
+        <form id="healthForm">
+            <label for="name">Họ và tên:</label>
+            <input type="text" id="name" required>
+            <label for="class">Lớp:</label>
+            <input type="text" id="class" required>
+            <label for="healthStatus">Tình trạng sức khỏe:</label>
+            <input type="text" id="healthStatus" required>
+            <button type="submit">Thêm</button>
+        </form>
+        <table id="healthTable">
+            <thead>
+                <tr>
+                    <th>Họ và tên</th>
+                    <th>Lớp</th>
+                    <th>Tình trạng sức khỏe</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
