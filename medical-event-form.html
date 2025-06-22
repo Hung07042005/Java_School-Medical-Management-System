@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Ghi nhận sự kiện y tế</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px 40px;
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2b6777;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-weight: 600;
+            margin-top: 15px;
+            display: block;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 6px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fdfdfd;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #2b6777;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #2b6777;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1f4d5f;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Ghi nhận sự kiện y tế</h2>
+
+        <form action="/nurse/medical-events-list.html" method="post">
+
+            <!-- Mã số học sinh (ID) -->
+            <label for="studentId">Mã số học sinh:</label>
+            <input type="text" id="studentId" name="studentId" required>
+
+            <label for="studentName">Họ tên học sinh:</label>
+            <input type="text" id="studentName" name="studentName" required>
+
+            <label for="eventType">Loại sự kiện:</label>
+            <select id="eventType" name="eventType" required>
+                <option value="">-- Chọn loại --</option>
+                <option value="tai_nan">Tai nạn</option>
+                <option value="sot">Sốt</option>
+                <option value="te_nga">Té ngã</option>
+                <option value="dich_benh">Dịch bệnh</option>
+                <option value="khac">Khác</option>
+            </select>
+
+            <label for="eventTime">Thời gian xảy ra:</label>
+            <input type="datetime-local" id="eventTime" name="eventTime" required>
+
+            <label for="description">Mô tả sự kiện:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="actionTaken">Xử lý ban đầu:</label>
+            <textarea id="actionTaken" name="actionTaken" rows="4"></textarea>
+
+            <label for="nurseName">Nhân viên y tế ghi nhận:</label>
+            <input type="text" id="nurseName" name="nurseName" required>
+
+            <button type="submit">Ghi nhận sự kiện</button>
+        </form>
+    </div>
+
+</body>
+</html>

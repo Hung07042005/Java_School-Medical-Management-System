@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Danh sách sự kiện y tế</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #2b6777;
+      margin-bottom: 30px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    th {
+      background-color: #2b6777;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: white;
+      display: inline-block;
+    }
+
+    .tai_nan { background-color: #e74c3c; }
+    .sot { background-color: #f39c12; }
+    .te_nga { background-color: #3498db; }
+    .dich_benh { background-color: #8e44ad; }
+    .khac { background-color: #2ecc71; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Danh sách sự kiện y tế đã ghi nhận</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Mã số HS</th>
+          <th>Họ tên HS</th>
+          <th>Loại sự kiện</th>
+          <th>Thời gian</th>
+          <th>Nhân viên y tế</th>
+          <th>Mô tả</th>
+          <th>Xử lý</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dữ liệu mẫu hoặc dùng Thymeleaf render -->
+        <tr>
+          <td>1</td>
+          <td>HS001</td>
+          <td>Nguyễn Văn A</td>
+          <td><span class="tag tai_nan">Tai nạn</span></td>
+          <td>2025-06-21 09:30</td>
+          <td>Trần Thị Lan</td>
+          <td>Ngã cầu thang khi ra chơi</td>
+          <td>Băng bó và theo dõi</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>HS002</td>
+          <td>Trần Minh B</td>
+          <td><span class="tag sot">Sốt</span></td>
+          <td>2025-06-20 14:10</td>
+          <td>Phạm Văn Khoa</td>
+          <td>Học sinh mệt, sốt nhẹ 38.5°C</td>
+          <td>Cho uống hạ sốt và gọi phụ huynh</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
