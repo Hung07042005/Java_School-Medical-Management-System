@@ -1,0 +1,105 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.1.6">
+  <diagram name="Page-1" id="zob1Z-dJXDqVNt3qmd-N">
+    <mxGraphModel dx="1737" dy="878" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-75" value="Bắt đầu" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="20" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-76" value="Lên kế hoạch &amp; Gửi thông báo kiểm tra" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
+          <mxGeometry x="450" y="90" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-77" value="Phụ huynh xác nhận?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="180" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-78" value="Chuẩn bị danh sách HS" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
+          <mxGeometry x="450" y="310" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-79" value="Thực hiện &amp; Ghi nhận kết quả" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
+          <mxGeometry x="450" y="420" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-80" value="Gửi kết quả cho phụ huynh" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
+          <mxGeometry x="450" y="530" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-81" value="Có dấu hiệu bất thường?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="630" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-82" value="Lập lịch hẹn tư vấn" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;" vertex="1" parent="1">
+          <mxGeometry x="680" y="640" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-83" value="Kết thúc" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="750" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-84" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-75" target="N2fToxz2FSKeLOqB5-2k-76">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="400" as="sourcePoint" />
+            <mxPoint x="850" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-85" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-76" target="N2fToxz2FSKeLOqB5-2k-77">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="480" as="sourcePoint" />
+            <mxPoint x="850" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-86" value="Có" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-77" target="N2fToxz2FSKeLOqB5-2k-78">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="600" as="sourcePoint" />
+            <mxPoint x="850" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-87" value="Không" style="endArrow=classic;html=1;exitX=0;exitY=0.5;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-77" target="N2fToxz2FSKeLOqB5-2k-83">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="790" y="560" as="sourcePoint" />
+            <mxPoint x="800" y="1080" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="350" y="220" />
+              <mxPoint x="350" y="510" />
+              <mxPoint x="350" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-88" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-78" target="N2fToxz2FSKeLOqB5-2k-79">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="700" as="sourcePoint" />
+            <mxPoint x="850" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-89" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-79" target="N2fToxz2FSKeLOqB5-2k-80">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="800" as="sourcePoint" />
+            <mxPoint x="850" y="840" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-90" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-80" target="N2fToxz2FSKeLOqB5-2k-81">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="900" as="sourcePoint" />
+            <mxPoint x="850" y="940" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-91" value="Có" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-81" target="N2fToxz2FSKeLOqB5-2k-82">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="910" y="980" as="sourcePoint" />
+            <mxPoint x="1000" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-92" value="Không" style="endArrow=classic;html=1;exitX=0.5;exitY=1;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-81" target="N2fToxz2FSKeLOqB5-2k-83">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="850" y="1020" as="sourcePoint" />
+            <mxPoint x="850" y="1080" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="N2fToxz2FSKeLOqB5-2k-93" value="" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="N2fToxz2FSKeLOqB5-2k-82" target="N2fToxz2FSKeLOqB5-2k-83">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1075" y="1010" as="sourcePoint" />
+            <mxPoint x="850" y="1080" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="755" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
