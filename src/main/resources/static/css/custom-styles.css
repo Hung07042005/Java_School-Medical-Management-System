@@ -1,0 +1,310 @@
+/* src/main/resources/static/css/custom-styles.css */
+
+/* --- General Body & Typography --- */
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background-color: #ffffff; /* White background */
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: rgba(0,134,137,255); /* Darker blue for headings */
+    font-weight: 600;
+}
+
+a {
+    color: #0d47a1; /* Dark blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #1565c0; /* Slightly lighter blue on hover */
+    text-decoration: underline;
+}
+
+/* --- Navbar Styling --- */
+.navbar {
+    background-color: #1e88e5 !important; /* Lighter blue background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow */
+    padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #fff !important; /* White text for brand */
+}
+
+.navbar-nav .nav-link {
+    color: rgba(180, 177, 177, 0.8) !important; /* Lighter white for links */
+    font-weight: 500;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff !important; /* Pure white on hover */
+}
+
+.navbar-nav .nav-link.active {
+    color: #fff !important;
+    border-bottom: 2px solid #ffffff; /* White underline for active */
+    padding-bottom: 5px;
+}
+
+.navbar .btn-outline-light {
+    border-color: #fff;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #fff;
+    color: #0d47a1;
+}
+
+/* --- Main Container & Cards --- */
+.container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Deeper shadow */
+}
+
+/* Jumbotron/Hero Section on Home Page */
+.jumbotron-custom {
+    background: linear-gradient(135deg, #0d47a1, #1565c0); /* Gradient blue background */
+    color: #fff;
+    padding: 6rem 3rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.jumbotron-custom h1 {
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.jumbotron-custom p {
+    font-size: 1.25rem;
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+}
+
+.jumbotron-custom .btn {
+    background-color: #ffc107; /* Yellow accent color for button */
+    border-color: #ffc107;
+    color: #0d47a1; /* Dark blue text on button */
+    font-weight: 600;
+    padding: 0.8rem 2rem;
+    border-radius: 50px; /* Pill-shaped button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.jumbotron-custom .btn:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+    border-color: #e0a800;
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Feature Boxes on Home Page */
+.feature-box {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    padding: 2.5rem;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none; /* Remove default border from bg-light border rounded-3 */
+}
+
+.feature-box:hover {
+    transform: translateY(-5px); /* Slight lift on hover */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+}
+
+.feature-box h2 {
+    color: #0d47a1;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* --- Form Styling --- */
+.form-label {
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    border-radius: 8px; /* Slightly more rounded form fields */
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.25rem rgba(13, 71, 161, 0.25); /* Blue shadow on focus */
+}
+
+/* --- Button Styling --- */
+.btn-primary {
+    background-color: #0d47a1; /* Primary blue button */
+    border-color: #0d47a1;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+    border-color: #1565c0;
+    transform: translateY(-1px);
+}
+
+.btn-success {
+    background-color: #28a745; /* Green for success/add */
+    border-color: #28a745;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+    transform: translateY(-1px);
+}
+
+.btn-warning {
+    background-color: #ffc107; /* Yellow for warning/edit */
+    border-color: #ffc107;
+    color: #333; /* Dark text for contrast */
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background-color: #dc3545; /* Red for danger/delete */
+    border-color: #dc3545;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+    transform: translateY(-1px);
+}
+
+/* --- Table Styling --- */
+.table {
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow for table */
+}
+
+.table thead {
+    background-color: #e0f2f7; /* Light blue header */
+    color: #1a237e; /* Dark blue text */
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    padding: 12px 15px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fdfdfd; /* Lighter stripe */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #f7f7f7; /* Slightly darker stripe */
+}
+
+/* --- Footer --- */
+.footer {
+    background-color: #e9ecef;
+    padding: 30px 0;
+    margin-top: 50px;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
+}
+
+/* --- Tag Input Specific Styles (Medical Record Form) --- */
+.tag-input-container {
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    min-height: 45px; /* Ensures consistent height */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tag-input-container:focus-within {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.25rem rgba(13, 71, 161, 0.25);
+}
+
+.tag {
+    background-color: #0d47a1; /* Blue tag background */
+    color: #fff; /* White tag text */
+    padding: 5px 10px;
+    border-radius: 20px; /* Pill-shaped tags */
+    font-size: 0.85em;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 5px; /* Space between tags */
+    margin-bottom: 5px; /* For wrapping */
+}
+
+.tag-remove {
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8); /* Lighter white for close icon */
+    transition: color 0.2s ease;
+}
+
+.tag-remove:hover {
+    color: #fff;
+}
+
+.tag-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    padding: 5px 0; /* Adjust padding to align with tags */
+    background-color: transparent; /* Ensure background is transparent */
+}
