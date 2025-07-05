@@ -75,12 +75,17 @@
                         <li class="list-group-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
                             <a th:href="@{/medical-records/student/1}" class="btn btn-link">Medical Records</a>
                         </li>
-                        <li class="list-group-item">
-                            <a href="#" class="btn btn-link disabled">Manage Medications (Coming Soon)</a>
+                        <li class="list-group-item" sec:authorize="hasRole('NURSE')">
+                            <a th:href="@{/nurse/record-event}" class="btn btn-link">Medical Event Form</a>
                         </li>
-                        <li class="list-group-item">
-                            <a href="#" class="btn btn-link disabled">Vaccination Management (Coming Soon)</a>
+                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
+                            <a th:href="@{/nurse/event-list}" class="btn btn-link">Medical Event List</a>
                         </li>
+
+                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
+                            <a th:href="@{/nurse/medical-supplies}" class="btn btn-link">Medical-supplies</a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

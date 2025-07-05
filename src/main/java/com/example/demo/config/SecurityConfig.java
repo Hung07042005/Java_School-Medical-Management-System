@@ -46,8 +46,12 @@ public class SecurityConfig {
                                 .password(passwordEncoder.encode("studentpass"))
                                 .roles("STUDENT")
                                 .build();
+        UserDetails manager = User.withUsername("manager")
+                                .password(passwordEncoder.encode("managerpass"))
+                                .roles("MANAGER")
+                                .build();                        
 
-        return new InMemoryUserDetailsManager(admin, nurse, parent, student);
+        return new InMemoryUserDetailsManager(admin, nurse, parent, student, manager);
     }
 
     // Cấu hình quy tắc bảo mật HTTP
@@ -60,6 +64,7 @@ public class SecurityConfig {
                 .requestMatchers("/medical-records/**").hasAnyRole("ADMIN", "MANAGER", "NURSE", "PARENT") // Cha mẹ cũng có thể quản lý hồ sơ
                 .anyRequest().authenticated() // Tất cả các request khác yêu cầu xác thực
             )
+            
             .formLogin(form -> form
                 .loginPage("/login") // Đường dẫn đến trang đăng nhập tùy chỉnh
                 .permitAll() // Cho phép tất cả mọi người truy cập trang login
