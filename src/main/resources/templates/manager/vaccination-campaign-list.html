@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Danh sách chiến dịch tiêm chủng</title>
+  
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  h2 {
+    text-align: center;
+    color: #2b6777;
+    margin-bottom: 30px;
+  }
+
+  .section-title {
+    color: #2b6777;
+    margin-top: 40px;
+    padding-bottom: 8px;
+    font-size: 20px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  th, td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #2b6777;
+    color: white;
+  }
+
+  tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  /* ================== NÚT ================== */
+  .btn {
+    display: inline-block;
+    padding: 10px 18px;
+    background-color: #2b6777;  
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .btn:hover {
+    background-color: #2b6777;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  }
+
+  .btn-primary {
+    margin-bottom: 20px;
+    float: right;
+  }
+
+  .btn-warning,
+  .btn-danger,
+  .btn-class {
+    background-color: #2b6777;
+  }
+
+  .btn-warning:hover,
+  .btn-danger:hover,
+  .btn-class:hover {
+    background-color: #2b6777;
+  }
+
+  /* Link tên chiến dịch */
+  a.campaign-link {
+    color: #2b6777;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  a.campaign-link:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+      display: block;
+    }
+
+    thead {
+      display: none;
+    }
+
+    td {
+      position: relative;
+      padding-left: 50%;
+      margin-bottom: 10px;
+      border: none;
+      border-bottom: 1px solid #ccc;
+    }
+
+    td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-weight: bold;
+      color: #2b6777;
+    }
+
+    .btn-primary {
+      float: none;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+  .btn-back{
+    margin-top: 10px;
+  }
+</style>
+
+
+</head>
+<body>
+  <div class="container">
+    <h2>📋 Danh sách chiến dịch tiêm chủng</h2>
+
+    <a th:href="@{/campaigns/new}" class="btn btn-primary" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">➕ Thêm chiến dịch</a>
+
+    <table>
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Tên chiến dịch</th>
+          <th>Ngày bắt đầu</th>
+          <th>Ngày kết thúc</th>
+          <th>Ghi chú</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="campaign, iterStat : ${campaigns}">
+          <td th:text="${iterStat.index + 1}"></td>
+
+          <!-- Link tên chiến dịch -->
+          <td>
+            <a th:href="@{'/vaccinations/campaign/' + ${campaign.id}}"
+   th:text="${campaign.campaignName}" class="campaign-link"></a>
+
+
+          </td>
+
+          <td th:text="${campaign.startDate}"></td>
+          <td th:text="${campaign.endDate}"></td>
+          <td th:text="${campaign.note}"></td>
+
+          <td>
+            <a th:href="@{'/campaigns/edit/' + ${campaign.id}}" class="btn btn-warning" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" >Sửa</a>
+            <a th:href="@{'/campaigns/delete/' + ${campaign.id}}" class="btn btn-danger"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa chiến dịch này?')" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" >Xóa</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a th:href="@{/}" class="btn btn-back " style="background-color:#777;">← Quay lại</a>
+  </div>
+</body>
+</html>

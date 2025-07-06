@@ -5,7 +5,9 @@ import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.example.demo.dto.StudentDTO; // Import StudentDTO
 
@@ -59,6 +61,29 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    // TODO: Trong thực tế, cần thêm logic kiểm tra trùng lặp username, studentId
-    // TODO: Xử lý mật khẩu một cách an toàn (ví dụ: dùng BcryptPasswordEncoder)
+    public List<Student> getStudentsByCampaign(Long campaignId) {
+        return studentRepository.findStudentsByCampaignId(campaignId);
+    }
+
+    public List<Student> getStudentsByCampaignAndClass(Long campaignId, String studentClass) {
+        return studentRepository.findStudentsByCampaignIdAndClass(campaignId, studentClass);
+    }
+
+    public List<String> getClassListFromCampaign(Long campaignId) {
+        return studentRepository.findStudentsByCampaignId(campaignId).stream()
+                .map(Student::getStudentClass)
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+    }
+    
+    public List<String> findAllClassNames() {
+        return studentRepository.findAll().stream()
+            .map(Student::getStudentClass)
+            .filter(Objects::nonNull)
+            .distinct()
+            .sorted()
+            .collect(Collectors.toList());
+    }
+
 }

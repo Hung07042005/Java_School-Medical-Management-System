@@ -1,10 +1,13 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "students")
@@ -17,6 +20,8 @@ public class Student extends User { // Kế thừa từ User
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private MedicalRecord medicalRecord; // Mỗi học sinh có một hồ sơ sức khỏe
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Vaccination> vaccinations = new ArrayList<>();
     // Constructors
     public Student() {
     }
@@ -63,5 +68,14 @@ public class Student extends User { // Kế thừa từ User
         if (medicalRecord != null) {
             medicalRecord.setStudent(this);
         }
+    }
+    public void addVaccination(Vaccination vaccination) {
+        vaccinations.add(vaccination);
+        vaccination.setStudent(this);
+    }
+
+    public void removeVaccination(Vaccination vaccination) {
+        vaccinations.remove(vaccination);
+        vaccination.setStudent(null);
     }
 }
