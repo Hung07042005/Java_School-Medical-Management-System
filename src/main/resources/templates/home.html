@@ -82,9 +82,16 @@
                             <a th:href="@{/nurse/event-list}" class="btn btn-link">Medical Event List</a>
                         </li>
 
-                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
-                            <a th:href="@{/nurse/medical-supplies}" class="btn btn-link">Medical-supplies</a>
+                                                <!-- Phụ huynh gửi thuốc -->
+                        <li class="list-group-item" sec:authorize="hasRole('PARENT')">
+                            <a th:href="@{/parent/send-medicine}" class="btn btn-link">Gửi thuốc cho học sinh</a>
                         </li>
+
+                        <!-- Y tá quản lý thuốc -->
+                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
+                            <a th:href="@{/nurse/medical-supplies}" class="btn btn-link">Quản lý thuốc học sinh</a>
+                        </li>
+
 
                     </ul>
                 </div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Gửi thuốc cho học sinh</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; padding: 20px; }
+    .container { max-width: 700px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #2b6777; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 10px 20px; background: #2b6777; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #1f4d5f; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Gửi thuốc cho học sinh</h2>
+<!-- Hiển thị thông báo nếu có ?success -->
+<div th:if="${param.success}" style="color: green; margin-bottom: 15px;">
+  ✅ Gửi thuốc thành công!
+</div>
+
+  <!-- ✅ Ensure encoding -->
+  <form action="/parent/send-medicine" method="post" accept-charset="UTF-8">
+
+    <label for="studentId">ID học sinh:</label>
+    <input type="text" id="studentId" name="studentId" required>
+
+    <label for="name">Tên thuốc / vật tư:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="type">Loại:</label>
+    <select id="type" name="type" required>
+      <option value="">-- Chọn loại --</option>
+      <option value="Thuốc">Thuốc</option>
+      <option value="Vật tư">Vật tư</option>
+    </select>
+
+    <label for="unit">Đơn vị tính:</label>
+    <input type="text" id="unit" name="unit" required>
+
+    <label for="quantity">Số lượng:</label>
+    <input type="number" id="quantity" name="quantity" min="1" required>
+
+    <label for="expiryDate">Hạn sử dụng (nếu có):</label>
+    <input type="date" id="expiryDate" name="expiryDate">
+
+    <label for="note">Ghi chú:</label>
+    <input type="text" id="note" name="note">
+
+    <button type="submit">Gửi thuốc</button>
+  </form>
+</div>
+</body>
+</html>
