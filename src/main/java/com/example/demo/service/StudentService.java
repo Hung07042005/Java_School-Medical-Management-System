@@ -25,15 +25,31 @@ public class StudentService {
         return studentRepository.findById(id);
     }
 
+    // Hàm chuẩn hóa tên tiếng Việt
+    private String chuanHoaTen(String ten) {
+        if (ten == null || ten.isBlank()) return ten;
+        String[] words = ten.trim().replaceAll("\\s+", " ").toLowerCase().split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String w : words) {
+            if (!w.isEmpty()) {
+                sb.append(Character.toUpperCase(w.charAt(0)));
+                if (w.length() > 1) sb.append(w.substring(1));
+                sb.append(" ");
+            }
+        }
+        return sb.toString().trim();
+    }
+
     // Phương thức để lưu (thêm mới hoặc cập nhật) học sinh từ DTO
     public Student saveStudentFromDTO(StudentDTO studentDTO) {
         Student student;
+        String fullNameChuanHoa = chuanHoaTen(studentDTO.getFullName());
         if (studentDTO.getId() != null) { // Nếu có ID, tức là đang cập nhật
             student = studentRepository.findById(studentDTO.getId())
                                      .orElseThrow(() -> new RuntimeException("Student not found with ID: " + studentDTO.getId()));
             // Cập nhật các trường từ DTO vào Entity hiện có
             student.setUsername(studentDTO.getUsername());
-            student.setFullName(studentDTO.getFullName());
+            student.setFullName(fullNameChuanHoa);
             student.setEmail(studentDTO.getEmail());
             student.setPhoneNumber(studentDTO.getPhoneNumber());
             student.setStudentId(studentDTO.getStudentId());
@@ -47,7 +63,7 @@ public class StudentService {
             // Mật khẩu tạm thời hoặc sẽ được đặt sau (ví dụ: random, hoặc yêu cầu đặt khi đăng ký)
             // Cần có logic để quản lý mật khẩu an toàn
             student.setPassword("temp_password"); // Tạm thời để vượt qua lỗi nullable = false
-            student.setFullName(studentDTO.getFullName());
+            student.setFullName(fullNameChuanHoa);
             student.setEmail(studentDTO.getEmail());
             student.setPhoneNumber(studentDTO.getPhoneNumber());
             student.setStudentId(studentDTO.getStudentId());

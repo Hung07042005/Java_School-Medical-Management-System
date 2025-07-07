@@ -302,7 +302,7 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                         <a class="nav-link" th:href="@{/students}">
-                            <i class="fas fa-users me-1"></i>Students
+                            <i class="fas fa-users me-1"></i>Danh sách Học sinh
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
@@ -317,18 +317,18 @@
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('NURSE')">
                         <a class="nav-link" th:href="@{/nurse/medical-supplies}">
-                            <i class="fas fa-pills me-1"></i>Medical Supplies
+                            <i class="fas fa-pills me-1"></i>Vật tư y tế
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('MANAGER')">
                         <a class="nav-link" th:href="@{/campaigns}">
-                            <i class="fas fa-syringe me-1"></i>Vaccination
+                            <i class="fas fa-syringe me-1"></i>Tiêm chủng
                         </a>
                     </li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <div sec:authorize="isAuthenticated()" class="me-3">
-                        <span class="text-muted">Welcome, <strong sec:authentication="name"></strong></span>
+                        <span class="text-muted">Xin chào, <strong sec:authentication="name"></strong></span>
                     </div>
                     <div sec:authorize="isAuthenticated()">
                         <a class="btn btn-outline-danger" th:href="@{/logout}">
