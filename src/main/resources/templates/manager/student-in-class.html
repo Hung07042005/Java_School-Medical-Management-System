@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách học sinh</title>
+  <style>
+    body { font-family: Arial; background: #f9f9f9; padding: 20px; }
+    .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { color: #2b6777; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border-bottom: 1px solid #ccc; text-align: left; }
+    th { background-color: #2b6777; color: white; }
+    .btn { padding: 8px 12px; background-color: #777; color: white; border-radius: 5px; text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2 th:text="'👩‍🎓 Học sinh lớp ' + ${className} + ' trong chiến dịch: ' + ${campaign.campaignName}"></h2>
+
+  <form th:action="@{'/campaign/' + ${campaign.id} + '/class/' + ${className} + '/notify'}" method="post">
+  <table>
+    <thead>
+      <tr>
+        <th>Chọn</th>
+        <th>STT</th>
+        <th>Họ tên</th>
+        <th>Ngày tiêm</th>
+        <th>Loại vaccine</th>
+        <th>Kết quả</th>
+        <th>Ghi chú</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="vaccination, iter : ${vaccinations}">
+        <td>
+          <input type="checkbox" name="selectedStudentIds"
+                 th:value="${vaccination.student.id}" />
+        </td>
+        <td th:text="${iter.index + 1}"></td>
+        <td th:text="${vaccination.student.fullName}"></td>
+        <td th:text="${#dates.format(vaccination.vaccinationDate, 'dd/MM/yyyy')}"></td>
+        <td th:text="${vaccination.vaccineName}"></td>
+        <td th:text="${vaccination.result}"></td>
+        <td th:text="${vaccination.note}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="submit" class="btn" style="margin-top: 15px;">📤 Gửi thông báo cho phụ huynh</button>
+</form>
+
+
+</div>
+</body>
+</html>

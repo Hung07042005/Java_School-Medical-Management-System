@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Ghi nhận sự kiện y tế</title>
+    
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -87,7 +88,9 @@
     <div class="container">
         <h2>Ghi nhận sự kiện y tế</h2>
 
-        <form action="/nurse/medical-events-list.html" method="post">
+        <form th:action="@{/nurse/record-event}" method="post">
+
+
 
             <!-- Mã số học sinh (ID) -->
             <label for="studentId">Mã số học sinh:</label>

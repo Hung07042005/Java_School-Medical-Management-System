@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>Danh sách sự kiện y tế</title>
+  
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -79,28 +80,18 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Dữ liệu mẫu hoặc dùng Thymeleaf render -->
-        <tr>
-          <td>1</td>
-          <td>HS001</td>
-          <td>Nguyễn Văn A</td>
-          <td><span class="tag tai_nan">Tai nạn</span></td>
-          <td>2025-06-21 09:30</td>
-          <td>Trần Thị Lan</td>
-          <td>Ngã cầu thang khi ra chơi</td>
-          <td>Băng bó và theo dõi</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>HS002</td>
-          <td>Trần Minh B</td>
-          <td><span class="tag sot">Sốt</span></td>
-          <td>2025-06-20 14:10</td>
-          <td>Phạm Văn Khoa</td>
-          <td>Học sinh mệt, sốt nhẹ 38.5°C</td>
-          <td>Cho uống hạ sốt và gọi phụ huynh</td>
-        </tr>
-      </tbody>
+<tr th:each="event, iterStat : ${events}">
+  <td th:text="${iterStat.index + 1}"></td>
+  <td th:text="${event.studentId}"></td>
+  <td th:text="${event.studentName}"></td>
+  <td><span th:class="'tag ' + ${event.eventType}" th:text="${event.eventType}"></span></td>
+  <td th:text="${#temporals.format(event.eventTime, 'yyyy-MM-dd HH:mm')}"></td>
+  <td th:text="${event.nurseName}"></td>
+  <td th:text="${event.description}"></td>
+  <td th:text="${event.actionTaken}"></td>
+</tr>
+</tbody>
+
     </table>
   </div>
 </body>

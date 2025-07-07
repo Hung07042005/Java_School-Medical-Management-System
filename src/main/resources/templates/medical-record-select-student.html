@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Học sinh - School Medical Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/css/custom-styles.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .student-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .student-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .student-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .student-details h5 {
+            margin: 0;
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+
+        .student-details p {
+            margin: 0.25rem 0 0 0;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        .student-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn-select {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+            color: white;
+        }
+
+        .btn-view {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-view:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+
+        .search-box {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .search-input {
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .back-btn {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+            transform: translateY(-2px);
+        }
+
+        .no-students {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-600);
+        }
+
+        .no-students i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .student-actions {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-heartbeat"></i>
+                SchoolMed
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <span class="text-muted">Welcome, <strong sec:authentication="name"></strong></span>
+                    </div>
+                    <a class="btn btn-outline-danger" th:href="@{/logout}">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 100px;">
+        <div class="main-container">
+            <!-- Back Button -->
+            <a th:href="@{/}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Quay lại trang chủ
+            </a>
+
+            <!-- Page Title -->
+            <h1 class="page-title">
+                <i class="fas fa-user-plus me-3"></i>
+                Chọn Học sinh để Khai báo Hồ sơ Sức khỏe
+            </h1>
+            <p class="page-subtitle">
+                Vui lòng chọn học sinh mà bạn muốn khai báo hoặc cập nhật hồ sơ sức khỏe
+            </p>
+
+            <!-- Search Box -->
+            <div class="search-box">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="fas fa-search"></i>
+                            </span>
+                            <input type="text" class="form-control search-input" id="studentSearch" 
+                                   placeholder="Tìm kiếm học sinh theo tên, mã số học sinh hoặc lớp...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students List -->
+            <div th:if="${#lists.isEmpty(students)}" class="no-students">
+                <i class="fas fa-users"></i>
+                <h3>Không có học sinh nào</h3>
+                <p>Hiện tại chưa có học sinh nào trong hệ thống.</p>
+            </div>
+
+            <div th:if="${!#lists.isEmpty(students)}" class="row" id="studentsContainer">
+                <div th:each="student : ${students}" class="col-lg-6 col-md-6 mb-3 student-item">
+                    <div class="student-card">
+                        <div class="student-info">
+                            <div class="student-avatar">
+                                <span th:text="${#strings.substring(student.fullName, 0, 1)}"></span>
+                            </div>
+                            <div class="student-details">
+                                <h5 th:text="${student.fullName}">Tên học sinh</h5>
+                                <p>
+                                    <i class="fas fa-id-card me-1"></i>
+                                    <span th:text="${student.studentId}">Mã số</span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-graduation-cap me-1"></i>
+                                    <span th:text="${student.studentClass}">Lớp</span>
+                                </p>
+                                <p>
+                                    <i class="fas fa-envelope me-1"></i>
+                                    <span th:text="${student.email}">Email</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="student-actions">
+                            <a th:href="@{/medical-records/student/{id}(id=${student.id})}" class="btn-select">
+                                <i class="fas fa-edit"></i>
+                                Khai báo Hồ sơ
+                            </a>
+                            <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn-view">
+                                <i class="fas fa-eye"></i>
+                                Xem thông tin
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search functionality
+        document.getElementById('studentSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const studentItems = document.querySelectorAll('.student-item');
+            
+            studentItems.forEach(item => {
+                const studentName = item.querySelector('h5').textContent.toLowerCase();
+                const studentId = item.querySelector('.student-details p:first-child span').textContent.toLowerCase();
+                const studentClass = item.querySelector('.student-details p:nth-child(2) span').textContent.toLowerCase();
+                const studentEmail = item.querySelector('.student-details p:nth-child(3) span').textContent.toLowerCase();
+                
+                const matches = studentName.includes(searchTerm) || 
+                               studentId.includes(searchTerm) || 
+                               studentClass.includes(searchTerm) || 
+                               studentEmail.includes(searchTerm);
+                
+                item.style.display = matches ? 'block' : 'none';
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.student-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html> 

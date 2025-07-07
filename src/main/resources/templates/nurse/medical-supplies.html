@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Quản lý thuốc học sinh</title>
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background-color: #f4f6f9; padding: 20px; }
+    .container { max-width: 1000px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 10px; border-bottom: 1px solid #ccc; }
+    th { background-color: #2b6777; color: white; }
+    tr:hover { background-color: #f1f1f1; }
+    h2 { text-align: center; color: #2b6777; margin-bottom: 25px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Quản lý thuốc học sinh</h2>
+  <table>
+  <thead>
+    <tr>
+      <th>STT</th>
+      <th>ID Học sinh</th>
+      <th>Tên thuốc</th>
+      <th>Loại</th>
+      <th>Đơn vị</th>
+      <th>Số lượng</th>
+      <th>Hạn dùng</th>
+      <th>Ghi chú</th>
+      <th>Đã uống?</th>
+      <th>Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="item, iter : ${medicines}">
+  <td th:text="${iter.count}"></td>
+  <td th:text="${item.studentId}"></td>
+  <td th:text="${item.name}"></td>
+  <td th:text="${item.type}"></td>
+  <td th:text="${item.unit}"></td>
+  <td th:text="${item.quantity}"></td>
+  <td th:text="${item.expiryDate != null ? #temporals.format(item.expiryDate, 'yyyy-MM-dd') : '–'}"></td>
+  <td th:text="${item.note}"></td>
+
+  <td th:text="${item.given != null and item.given} ? '✅ Đã uống' : '⏳ Chưa uống'"></td>
+
+  <td>
+    <form th:action="@{'/nurse/confirm-given/' + ${item.id}}" method="post"
+          th:if="${item.given == null or !item.given}">
+      <button type="submit"
+              style="background: #28a745; color: white; border: none; border-radius: 5px; padding: 5px 10px;">
+        Xác nhận
+      </button>
+    </form>
+  </td>
+</tr>
+
+  </tbody>
+</table>
+</div>
+</body>
+</html>

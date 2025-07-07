@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Medical Record for <span th:text="${student.fullName}"></span></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/css/custom-styles.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .tag-input-container {
+            border: 1px solid #ced4da;
+            border-radius: 0.25rem;
+            padding: 0.375rem 0.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            align-items: center;
+        }
+        .tag {
+            background-color: #e2e6ea;
+            padding: 5px 8px;
+            border-radius: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.9em;
+        }
+        .tag-remove {
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #6c757d;
+        }
+        .tag-input {
+            flex-grow: 1;
+            border: none;
+            outline: none;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="mb-3 text-center">Medical Record for <span th:text="${student.fullName}"></span></h1>
+        <p class="text-center">Student ID: <strong th:text="${student.studentId}"></strong> | Class: <strong th:text="${student.studentClass}"></strong></p>
+        <hr class="mb-4">
+
+        <form th:action="@{/medical-records}" th:object="${medicalRecord}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{studentId}" />
+            <!-- Hidden field để xác định nơi redirect sau khi lưu -->
+            <input type="hidden" name="returnTo" value="select" />
+
+            <h2 class="mb-3">Health Information</h2>
+
+            <div class="mb-3">
+                <label for="allergiesInput" class="form-label">Allergies (enter and press Enter/Tab for multiple):</label>
+                <div class="tag-input-container">
+                    <span th:each="allergy : ${medicalRecord.allergies}" class="tag">
+                        <span th:text="${allergy}"></span>
+                        <span class="tag-remove" onclick="removeTag(this)">&times;</span>
+                        <input type="hidden" name="allergies" th:value="${allergy}" />
+                    </span>
+                    <input type="text" id="allergiesInput" class="tag-input" onkeydown="addTag(event, this, 'allergies')" placeholder="e.g., Peanuts, Pollen">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="chronicConditionsInput" class="form-label">Chronic Conditions (enter and press Enter/Tab for multiple):</label>
+                <div class="tag-input-container">
+                    <span th:each="condition : ${medicalRecord.chronicConditions}" class="tag">
+                        <span th:text="${condition}"></span>
+                        <span class="tag-remove" onclick="removeTag(this)">&times;</span>
+                        <input type="hidden" name="chronicConditions" th:value="${condition}" />
+                    </span>
+                    <input type="text" id="chronicConditionsInput" class="tag-input" onkeydown="addTag(event, this, 'chronicConditions')" placeholder="e.g., Asthma, Diabetes">
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="pastMedicalHistory" class="form-label">Past Medical History:</label>
+                <textarea id="pastMedicalHistory" th:field="*{pastMedicalHistory}" class="form-control" rows="3" placeholder="e.g., appendectomy in 2020"></textarea>
+            </div>
+
+            <h2 class="mb-3 mt-4">Vision and Hearing</h2>
+
+            <div class="mb-3">
+                <label for="visionLeft" class="form-label">Vision (Left Eye):</label>
+                <input type="number" step="0.1" id="visionLeft" th:field="*{visionLeft}" class="form-control" placeholder="e.g., 1.0" />
+            </div>
+
+            <div class="mb-3">
+                <label for="visionRight" class="form-label">Vision (Right Eye):</label>
+                <input type="number" step="0.1" id="visionRight" th:field="*{visionRight}" class="form-control" placeholder="e.g., 1.0" />
+            </div>
+
+            <div class="mb-3">
+                <label for="hearingStatus" class="form-label">Hearing Status:</label>
+                <input type="text" id="hearingStatus" th:field="*{hearingStatus}" class="form-control" placeholder="e.g., Normal, Mild hearing loss" />
+            </div>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                <button type="submit" class="btn btn-primary">Save Medical Record</button>
+                <a th:href="@{/students}" class="btn btn-secondary">Back to Student List</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // JavaScript for tag input (Allergies, Chronic Conditions) - vẫn giữ nguyên
+        function addTag(event, inputElement, fieldName) {
+            if (event.key === 'Enter' || event.key === 'Tab') {
+                event.preventDefault();
+                const value = inputElement.value.trim();
+                if (value) {
+                    const container = inputElement.closest('.tag-input-container');
+                    const tagHtml = `
+                        <span class="tag">
+                            <span>${value}</span>
+                            <span class="tag-remove" onclick="removeTag(this)">&times;</span>
+                            <input type="hidden" name="${fieldName}" value="${value}" />
+                        </span>
+                    `;
+                    container.insertAdjacentHTML('afterbegin', tagHtml);
+                    inputElement.value = '';
+                }
+            }
+        }
+
+        function removeTag(spanElement) {
+            spanElement.closest('.tag').remove();
+        }
+    </script>
+</body>
+</html>
