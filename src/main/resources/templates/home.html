@@ -4,119 +4,604 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>School Medical Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="/css/custom-styles.css" rel="stylesheet">
     <style>
-        /* CSS tùy chỉnh của bạn */
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #f8f9fa; /* Light background color */
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
         }
+
+        /* Modern Navbar */
         .navbar {
-            background-color: #0056b3; /* Darker blue for navbar */
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
         }
-        .footer {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #e9ecef;
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--gray-600) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            margin: 2rem 0;
             text-align: center;
-            color: #6c757d;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 2.5rem auto;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+            color: white;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+        }
+
+        .feature-description {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-link:hover {
+            color: var(--primary-dark);
+            transform: translateX(5px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+            color: var(--gray-600);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            .feature-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/}">School Medical System</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-heartbeat"></i>
+                SchoolMed
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/students}" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">Manage Students</a>
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/students}">
+                            <i class="fas fa-users me-1"></i>Students
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/medical-records/student/1}" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">Medical Records</a>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/medical-records/view-select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Xem Hồ sơ Y tế
+                        </a>
                     </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                    <li class="nav-item" sec:authorize="hasRole('PARENT')">
+                        <a class="nav-link" th:href="@{/medical-records/select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Khai báo Hồ sơ
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/nurse/medical-supplies}">
+                            <i class="fas fa-pills me-1"></i>Medical Supplies
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
+                        <a class="nav-link" th:href="@{/campaigns}">
+                            <i class="fas fa-syringe me-1"></i>Vaccination
+                        </a>
                     </li>
                 </ul>
-                <div sec:authorize="isAuthenticated()" class="d-flex text-white">
-                    <span>Welcome, <span sec:authentication="name"></span>!</span>
-                </div>
-                <div sec:authorize="isAnonymous()" class="d-flex">
-                    <a class="btn btn-outline-light" th:href="@{/login}">Login</a>
+                <div class="d-flex align-items-center">
+                    <div sec:authorize="isAuthenticated()" class="me-3">
+                        <span class="text-muted">Welcome, <strong sec:authentication="name"></strong></span>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <a class="btn btn-outline-danger" th:href="@{/logout}">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </a>
+                    </div>
+                    <div sec:authorize="isAnonymous()">
+                        <a class="btn btn-primary" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <div class="container mt-4">
-        <div class="p-5 mb-4 bg-light rounded-3">
-            <div class="container-fluid py-5 text-center">
-                <h1 class="display-5 fw-bold">School Medical Management System</h1>
-                <p class="col-md-8 fs-4 mx-auto">Phần mềm quản lý y tế học đường giúp theo dõi sức khỏe học sinh, quản lý hồ sơ y tế, thuốc men và các sự kiện y tế.</p>
-                <div sec:authorize="isAnonymous()">
-                    <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button">Get Started</a>
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 100px;">
+        <!-- Hero Section -->
+        <div class="hero-section fade-in">
+            <h1 class="hero-title">School Medical Management System</h1>
+            <p class="hero-subtitle">
+                Hệ thống quản lý y tế học đường hiện đại, giúp theo dõi sức khỏe học sinh, 
+                quản lý hồ sơ y tế, thuốc men và các sự kiện y tế một cách hiệu quả và an toàn.
+            </p>
+            <div sec:authorize="isAnonymous()">
+                <a class="btn hero-btn" th:href="@{/login}">
+                    <i class="fas fa-rocket me-2"></i>Bắt đầu ngay
+                </a>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section slide-in-left">
+            <div class="row">
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Học sinh</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Sự kiện y tế</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Chiến dịch tiêm chủng</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">An toàn</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="h-100 p-5 bg-light border rounded-3">
-                    <h2>Features</h2>
-                    <p>Khám phá các tính năng chính của hệ thống để quản lý sức khỏe học đường một cách hiệu quả.</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
-                            <a th:href="@{/students}" class="btn btn-link">Manage Students</a>
-                        </li>
-                        <li class="list-group-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
-                            <a th:href="@{/medical-records/student/1}" class="btn btn-link">Medical Records</a>
-                        </li>
-                        <li class="list-group-item" sec:authorize="hasRole('NURSE')">
-                            <a th:href="@{/nurse/record-event}" class="btn btn-link">Medical Event Form</a>
-                        </li>
-                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
-                            <a th:href="@{/nurse/event-list}" class="btn btn-link">Medical Event List</a>
-                        </li>
-
-                                                <!-- Phụ huynh gửi thuốc -->
-                        <li class="list-group-item" sec:authorize="hasRole('PARENT')">
-                            <a th:href="@{/parent/send-medicine}" class="btn btn-link">Gửi thuốc cho học sinh</a>
-                        </li>
-
-                        <!-- Y tá quản lý thuốc -->
-                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
-                            <a th:href="@{/nurse/medical-supplies}" class="btn btn-link">Quản lý thuốc học sinh</a>
-                        </li>
-                        
-                        <li class="list-group-item" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
-                            <a th:href="@{/campaigns}" class="btn btn-link">Vaccination campaign list</a>
-                        </li>
-
-
-                    </ul>
+        <!-- Features Section -->
+        <div class="row g-4">
+            <!-- Student Management -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Quản lý Học sinh</h3>
+                    <p class="feature-description">
+                        Quản lý thông tin học sinh, hồ sơ cá nhân và theo dõi sức khỏe 
+                        của từng học sinh một cách chi tiết và có hệ thống.
+                    </p>
+                    <a th:href="@{/students}" class="feature-link">
+                        Quản lý ngay <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-6 mb-4">
-                <div class="h-100 p-5 bg-light border rounded-3">
-                    <h2>About Us</h2>
-                    <p>Tìm hiểu thêm về trường học, phòng y tế và những cam kết của chúng tôi đối với sức khỏe học sinh.</p>
-                    <p>Chúng tôi cung cấp tài liệu về sức khỏe học đường, blog chia sẻ kinh nghiệm, ...</p>
-                    <a href="#" class="btn btn-outline-primary">Learn More</a>
+
+            <!-- Medical Records -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3 class="feature-title">Hồ sơ Y tế</h3>
+                    <p class="feature-description">
+                        Lưu trữ và quản lý hồ sơ sức khỏe, tiền sử bệnh, dị ứng 
+                        và các thông tin y tế quan trọng của học sinh.
+                    </p>
+                    <div sec:authorize="hasRole('PARENT')">
+                        <a th:href="@{/medical-records/select-student}" class="feature-link">
+                            Chọn học sinh để khai báo <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a th:href="@{/medical-records/view-select-student}" class="feature-link">
+                            Xem hồ sơ <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Events -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('NURSE')">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Sự kiện Y tế</h3>
+                    <p class="feature-description">
+                        Ghi nhận và theo dõi các sự kiện y tế, tai nạn, 
+                        bệnh tật xảy ra tại trường học.
+                    </p>
+                    <a th:href="@{/nurse/record-event}" class="feature-link">
+                        Ghi nhận sự kiện <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Medical Supplies -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3 class="feature-title">Quản lý Thuốc</h3>
+                    <p class="feature-description">
+                        Quản lý thuốc phụ huynh gửi, theo dõi việc sử dụng 
+                        và đảm bảo an toàn khi cho học sinh uống thuốc.
+                    </p>
+                    <a th:href="@{/nurse/medical-supplies}" class="feature-link">
+                        Quản lý thuốc <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vaccination Campaigns -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('MANAGER')">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3 class="feature-title">Chiến dịch Tiêm chủng</h3>
+                    <p class="feature-description">
+                        Lập kế hoạch và quản lý các chiến dịch tiêm chủng, 
+                        theo dõi tiến độ và kết quả tiêm chủng.
+                    </p>
+                    <a th:href="@{/campaigns}" class="feature-link">
+                        Quản lý chiến dịch <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Parent Medicine -->
+            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('PARENT')">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h3 class="feature-title">Gửi Thuốc cho Con</h3>
+                    <p class="feature-description">
+                        Phụ huynh có thể gửi thuốc cho con em mình 
+                        và theo dõi việc sử dụng thuốc tại trường.
+                    </p>
+                    <a th:href="@{/parent/send-medicine}" class="feature-link">
+                        Gửi thuốc <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="feature-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <h2 class="feature-title">Về Hệ thống Y tế Học đường</h2>
+                            <p class="feature-description">
+                                Hệ thống quản lý y tế học đường được thiết kế để đảm bảo sức khỏe 
+                                và an toàn cho học sinh. Chúng tôi cung cấp các giải pháp toàn diện 
+                                cho việc quản lý sức khỏe học đường, từ việc theo dõi sức khỏe hàng ngày 
+                                đến quản lý các chiến dịch tiêm chủng quy mô lớn.
+                            </p>
+                            <div class="d-flex gap-3">
+                                <div class="text-center">
+                                    <i class="fas fa-shield-alt text-success fs-3"></i>
+                                    <div class="mt-2"><small>An toàn</small></div>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-clock text-primary fs-3"></i>
+                                    <div class="mt-2"><small>24/7</small></div>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fas fa-user-md text-warning fs-3"></i>
+                                    <div class="mt-2"><small>Chuyên nghiệp</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <img src="/images/main-slider-2.jpg" alt="Medical Care" class="img-fluid rounded-3" style="max-height: 300px; object-fit: cover;">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="footer mt-auto py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">&copy; 2025 School Medical Management System. All rights reserved.</span>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="mb-3">
+                        <i class="fas fa-heartbeat text-primary me-2"></i>
+                        School Medical Management System
+                    </h5>
+                    <p class="mb-0">Đảm bảo sức khỏe và an toàn cho học sinh là ưu tiên hàng đầu của chúng tôi.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0">&copy; 2025 School Medical Management System. All rights reserved.</p>
+                    <div class="mt-2">
+                        <a href="#" class="text-muted me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-muted me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add scroll effect to navbar
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                    navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+                } else {
+                    navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                    navbar.style.boxShadow = 'none';
+                }
+            });
+
+            // Add intersection observer for animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>

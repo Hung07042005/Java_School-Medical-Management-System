@@ -10,7 +10,7 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long studentId;
+    private String studentId;
     private String name;
     private String type;
     private String unit;
@@ -25,8 +25,8 @@ public class Medicine {
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public Long getStudentId() { return studentId; }
-    public void setStudentId(Long studentId) { this.studentId = studentId; }
+    public String getStudentId() { return studentId; }
+    public void setStudentId(String studentId) { this.studentId = studentId; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

@@ -63,6 +63,8 @@ public class SecurityConfig {
                 .requestMatchers("/students/**").hasAnyRole("ADMIN", "MANAGER", "NURSE") // Chỉ admin, manager, nurse được quản lý học sinh
                 .requestMatchers("/medical-records/**").hasAnyRole("ADMIN", "MANAGER", "NURSE", "PARENT") // Cha mẹ cũng có thể quản lý hồ sơ
                 .requestMatchers("/manager/**").hasAnyRole("MANAGER")
+                .requestMatchers("/nurse/**").hasAnyRole("NURSE", "ADMIN", "MANAGER")
+                .requestMatchers("/parent/**").hasRole("PARENT")
                 .anyRequest().authenticated() // Tất cả các request khác yêu cầu xác thực
             )
             

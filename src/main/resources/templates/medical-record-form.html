@@ -56,6 +56,8 @@
         <form th:action="@{/medical-records}" th:object="${medicalRecord}" method="post">
             <input type="hidden" th:field="*{id}" />
             <input type="hidden" th:field="*{studentId}" />
+            <!-- Hidden field để xác định nơi redirect sau khi lưu -->
+            <input type="hidden" name="returnTo" value="select" />
 
             <h2 class="mb-3">Health Information</h2>
 

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xem Hồ sơ Y tế - <span th:text="${student.fullName}"></span></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/css/custom-styles.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .student-header {
+            background: linear-gradient(135deg, var(--info-color), var(--primary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .student-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .student-info {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            color: var(--gray-800);
+            line-height: 1.6;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--info-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .no-data {
+            color: var(--gray-500);
+            font-style: italic;
+        }
+
+        .back-btn {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-btn:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+            transform: translateY(-2px);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(245, 158, 11, 0.3);
+            color: white;
+        }
+
+        .btn-back-list {
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-back-list:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+            transform: translateY(-2px);
+        }
+
+        .no-record {
+            text-align: center;
+            padding: 3rem;
+            color: var(--gray-600);
+        }
+
+        .no-record i {
+            font-size: 4rem;
+            color: var(--gray-400);
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .student-name {
+                font-size: 1.5rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-heartbeat"></i>
+                SchoolMed
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">
+                            <i class="fas fa-home me-1"></i>Home
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <span class="text-muted">Welcome, <strong sec:authentication="name"></strong></span>
+                    </div>
+                    <a class="btn btn-outline-danger" th:href="@{/logout}">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 100px;">
+        <div class="main-container">
+            <!-- Back Button -->
+            <a th:href="@{/medical-records/view-select-student}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Quay lại danh sách học sinh
+            </a>
+
+            <!-- Student Header -->
+            <div class="student-header">
+                <div class="student-avatar">
+                    <span th:text="${#strings.substring(student.fullName, 0, 1)}"></span>
+                </div>
+                <h1 class="student-name" th:text="${student.fullName}">Tên học sinh</h1>
+                <div class="student-info">
+                    <i class="fas fa-id-card me-2"></i>
+                    <span th:text="${student.studentId}">Mã số học sinh</span>
+                    <span class="mx-3">|</span>
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    <span th:text="${student.studentClass}">Lớp</span>
+                </div>
+            </div>
+
+            <!-- No Record Message -->
+            <div th:if="${!hasRecord}" class="no-record">
+                <i class="fas fa-file-medical"></i>
+                <h3>Chưa có hồ sơ y tế</h3>
+                <p>Học sinh này chưa có hồ sơ y tế trong hệ thống.</p>
+                <div class="action-buttons">
+                    <a th:href="@{/medical-records/student/{id}(id=${student.id})}" class="btn-edit">
+                        <i class="fas fa-plus"></i>
+                        Tạo hồ sơ y tế
+                    </a>
+                </div>
+            </div>
+
+            <!-- Medical Record Content -->
+            <div th:if="${hasRecord}">
+                <!-- Health Information -->
+                <div class="info-card">
+                    <h2 class="info-title">
+                        <i class="fas fa-heartbeat"></i>
+                        Thông tin Sức khỏe
+                    </h2>
+                    
+                    <!-- Allergies -->
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            Dị ứng
+                        </div>
+                        <div class="info-value" th:if="${!#lists.isEmpty(medicalRecord.allergies)}">
+                            <div class="tag-list">
+                                <span th:each="allergy : ${medicalRecord.allergies}" class="tag" th:text="${allergy}"></span>
+                            </div>
+                        </div>
+                        <div class="info-value no-data" th:if="${#lists.isEmpty(medicalRecord.allergies)}">
+                            Không có thông tin dị ứng
+                        </div>
+                    </div>
+
+                    <!-- Chronic Conditions -->
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-notes-medical me-2"></i>
+                            Bệnh mãn tính
+                        </div>
+                        <div class="info-value" th:if="${!#lists.isEmpty(medicalRecord.chronicConditions)}">
+                            <div class="tag-list">
+                                <span th:each="condition : ${medicalRecord.chronicConditions}" class="tag" th:text="${condition}"></span>
+                            </div>
+                        </div>
+                        <div class="info-value no-data" th:if="${#lists.isEmpty(medicalRecord.chronicConditions)}">
+                            Không có bệnh mãn tính
+                        </div>
+                    </div>
+
+                    <!-- Past Medical History -->
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-history me-2"></i>
+                            Tiền sử bệnh
+                        </div>
+                        <div class="info-value" th:if="${medicalRecord.pastMedicalHistory != null and !medicalRecord.pastMedicalHistory.isEmpty()}">
+                            <span th:text="${medicalRecord.pastMedicalHistory}"></span>
+                        </div>
+                        <div class="info-value no-data" th:if="${medicalRecord.pastMedicalHistory == null or medicalRecord.pastMedicalHistory.isEmpty()}">
+                            Không có thông tin tiền sử bệnh
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vision and Hearing -->
+                <div class="info-card">
+                    <h2 class="info-title">
+                        <i class="fas fa-eye"></i>
+                        Thị lực và Thính giác
+                    </h2>
+                    
+                    <!-- Vision -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Thị lực mắt trái
+                                </div>
+                                <div class="info-value" th:if="${medicalRecord.visionLeft != null}">
+                                    <span th:text="${medicalRecord.visionLeft}"></span>
+                                </div>
+                                <div class="info-value no-data" th:if="${medicalRecord.visionLeft == null}">
+                                    Chưa kiểm tra
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="fas fa-eye me-2"></i>
+                                    Thị lực mắt phải
+                                </div>
+                                <div class="info-value" th:if="${medicalRecord.visionRight != null}">
+                                    <span th:text="${medicalRecord.visionRight}"></span>
+                                </div>
+                                <div class="info-value no-data" th:if="${medicalRecord.visionRight == null}">
+                                    Chưa kiểm tra
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hearing -->
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="fas fa-deaf me-2"></i>
+                            Tình trạng thính giác
+                        </div>
+                        <div class="info-value" th:if="${medicalRecord.hearingStatus != null and !medicalRecord.hearingStatus.isEmpty()}">
+                            <span th:text="${medicalRecord.hearingStatus}"></span>
+                        </div>
+                        <div class="info-value no-data" th:if="${medicalRecord.hearingStatus == null or medicalRecord.hearingStatus.isEmpty()}">
+                            Chưa kiểm tra
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <a th:href="@{/medical-records/student/{id}(id=${student.id})}" class="btn-edit">
+                        <i class="fas fa-edit"></i>
+                        Chỉnh sửa hồ sơ
+                    </a>
+                    <a th:href="@{/medical-records/view-select-student}" class="btn-back-list">
+                        <i class="fas fa-list"></i>
+                        Xem học sinh khác
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
