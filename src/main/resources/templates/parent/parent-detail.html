@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông tin phụ huynh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2b6777;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            margin-bottom: 30px;
+        }
+
+        .info p {
+            margin: 6px 0;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #ccc;
+            text-align: left;
+        }
+
+        th {
+            background-color: #2b6777;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 14px;
+            background-color: #2b6777;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #205062;
+        }
+        .btn-edit, .btn-delete{
+          text-align: right;
+          margin-top: 20px;
+        }
+        .btn-group{
+           text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>👨‍👩‍👧‍👦 Thông tin phụ huynh</h2>
+
+    <div class="info">
+        <p><strong>Họ tên:</strong> <span th:text="${parent.fullName}"></span></p>
+        <p><strong>Email:</strong> <span th:text="${parent.email}"></span></p>
+        <p><strong>Số điện thoại:</strong> <span th:text="${parent.phoneNumber}"></span></p>
+        <div class="btn-group">
+            <a th:href="@{/parents/edit/{id}(id=${parent.id})}" class="btn btn-edit">Chỉnh sửa</a>
+
+            <form th:action="@{/parents/delete/{id}(id=${parent.id})}" method="post" 
+                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa phụ huynh này không?');"
+                  style="display: inline;">
+                <button type="submit" class="btn btn-delete">Xóa</button>
+            </form>
+            
+        </div>
+    </div>
+     
+    <h3>📋 Danh sách con</h3>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mã học sinh</th>
+            <th>Họ tên</th>
+            <th>Lớp</th>
+            <th>Email</th>
+            <th>Ngày sinh</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.studentId}"></td>
+            <td th:text="${student.fullName}"></td>
+            <td th:text="${student.studentClass}"></td>
+            <td th:text="${student.email}"></td>
+            <td th:text="${student.dateOfBirth}"></td>
+        </tr>
+        <tr th:if="${students.empty}">
+            <td colspan="6" style="text-align: center;">Không có học sinh nào.</td>
+        </tr>
+        </tbody>
+    </table>
+       
+        <a th:href="@{/students}" class="btn">← Quay lại danh sách học sinh</a>
+    
+</div>
+</body>
+</html>

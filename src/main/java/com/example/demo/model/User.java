@@ -18,7 +18,9 @@ public abstract class User { // Lớp trừu tượng vì User không tồn tạ
     private String password; // Lưu ý: Trong thực tế cần mã hóa mật khẩu!
 
     private String fullName;
+    
     private String email;
+
     private String phoneNumber;
 
     // Constructors

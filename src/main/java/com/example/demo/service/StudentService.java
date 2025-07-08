@@ -5,7 +5,7 @@ import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Objects;
+// import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -94,12 +94,24 @@ public class StudentService {
     }
     
     public List<String> findAllClassNames() {
-        return studentRepository.findAll().stream()
-            .map(Student::getStudentClass)
-            .filter(Objects::nonNull)
-            .distinct()
-            .sorted()
-            .collect(Collectors.toList());
+        return studentRepository.findAllClassNames();
     }
 
+    public List<Student> findByStudentClass(String className) {
+        return studentRepository.findByStudentClass(className);
+    }
+    //save student
+    public void saveStudent(Student student) {
+       studentRepository.save(student);
+    }
+    // show list student
+    public List<Student> getAllStudentsAndParent(){
+        return studentRepository.findAllWithParent();
+    }
+    // find all student form parent 
+     public List<Student> getStudentByParentID( Long parent_Id) {
+        return studentRepository.findStudentsByParentId(parent_Id);
+    }
+
+    
 }

@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.OneToOne;
@@ -14,7 +17,9 @@ import java.util.List;
 public class Student extends User { // Kế thừa từ User
 
     private String studentId; // Mã số học sinh
+
     private LocalDate dateOfBirth;
+
     private String studentClass; // Lớp học (ví dụ: "10A1")
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -22,8 +27,14 @@ public class Student extends User { // Kế thừa từ User
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Vaccination> vaccinations = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
+
     // Constructors
     public Student() {
+        super();
     }
 
     public Student(String username, String password, String fullName, String email, String phoneNumber,
@@ -77,5 +88,12 @@ public class Student extends User { // Kế thừa từ User
     public void removeVaccination(Vaccination vaccination) {
         vaccinations.remove(vaccination);
         vaccination.setStudent(null);
+    }
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${parent.id != null} ? 'Chỉnh sửa phụ huynh' : 'Thêm phụ huynh'">Phụ huynh</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f6f9;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #2b6777;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #2b6777;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #2b6777;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #255566;
+        }
+
+        a.back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #2b6777;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2 th:text="${parent.id != null} ? '✏️ Chỉnh sửa thông tin phụ huynh' : '➕ Thêm phụ huynh cho học sinh'">Phụ huynh</h2>
+
+    <form th:action="@{/parents/save}" method="post" th:object="${parent}">
+        <!-- Truyền id để biết là đang update -->
+        <input type="hidden" th:field="*{id}" />
+
+        <!-- studentId chỉ cần khi thêm mới -->
+        <input type="hidden" name="studentId" th:if="${studentId != null}" th:value="${studentId}" />
+
+        <label>Họ và tên</label>
+        <input type="text" th:field="*{fullName}" required />
+
+        <label>Tên đăng nhập</label>
+        <input type="text" th:field="*{username}" required />
+
+        <label>Mật khẩu</label>
+        <input type="password" th:field="*{password}" required />
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" required />
+
+        <label>Số điện thoại</label>
+        <input type="text" th:field="*{phoneNumber}" required />
+
+        <button type="submit" th:text="${parent.id != null} ? 'Cập nhật phụ huynh' : 'Lưu phụ huynh'">Lưu</button>
+    </form>
+
+    <a th:href="@{/students}" class="back-link">← Quay lại danh sách học sinh</a>
+</div>
+
+</body>
+</html>
