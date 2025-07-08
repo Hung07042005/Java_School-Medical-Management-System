@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import java.lang.foreign.Linker.Option;
-import java.util.List;
+
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import com.example.demo.model.Student;
 import com.example.demo.repository.IParentRepository;
 import com.example.demo.repository.StudentRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class ParentService {
