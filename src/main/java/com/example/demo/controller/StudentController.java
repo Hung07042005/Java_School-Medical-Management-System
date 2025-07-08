@@ -21,7 +21,7 @@ public class StudentController {
     // --- Chức năng Hiển thị Danh sách ---
     @GetMapping
     public String listStudents(Model model) {
-        List<Student> students = studentService.getAllStudents();
+        List<Student> students = studentService.getAllStudentsAndParent();
         model.addAttribute("students", students);
         return "student-list"; // Trả về template student-list.html
     }
