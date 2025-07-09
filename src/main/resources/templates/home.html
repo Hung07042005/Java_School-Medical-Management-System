@@ -325,6 +325,16 @@
                             <i class="fas fa-syringe me-1"></i>Tiêm chủng
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/health-documents}">
+                            <i class="fas fa-book-medical me-1"></i>Tài liệu Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/health-blogs}">
+                            <i class="fas fa-blog me-1"></i>Blog Sức khỏe
+                        </a>
+                    </li>
                 </ul>
                 <div class="d-flex align-items-center">
                     <div sec:authorize="isAuthenticated()" class="me-3">
@@ -499,6 +509,40 @@
                     </p>
                     <a th:href="@{/parent/send-medicine}" class="feature-link">
                         Gửi thuốc <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Health Documents -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h3 class="feature-title">Tài liệu Sức khỏe</h3>
+                    <p class="feature-description">
+                        Thư viện tài liệu về sức khỏe học đường, hướng dẫn, 
+                        quy trình và chính sách y tế cho nhà trường.
+                    </p>
+                    <a th:href="@{/health-documents}" class="feature-link">
+                        Xem tài liệu <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Health Blog -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-blog"></i>
+                    </div>
+                    <h3 class="feature-title">Blog Chia sẻ Kinh nghiệm</h3>
+                    <p class="feature-description">
+                        Chia sẻ kinh nghiệm, mẹo sức khỏe và kiến thức 
+                        về chăm sóc sức khỏe học đường từ chuyên gia.
+                    </p>
+                    <a th:href="@{/health-blogs}" class="feature-link">
+                        Đọc blog <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>

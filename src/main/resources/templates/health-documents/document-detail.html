@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${document.title} + ' - Tài liệu Sức khỏe Học đường'">Chi tiết tài liệu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link th:href="@{/css/custom-styles.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row bg-primary text-white p-3">
+            <div class="col">
+                <h1><i class="fas fa-book-medical"></i> Tài liệu Sức khỏe Học đường</h1>
+                <p class="mb-0">Thư viện tài liệu về sức khỏe và y tế học đường</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Trang chủ</a>
+                <div class="navbar-nav">
+                    <a class="nav-link active" href="/health-documents">Tài liệu</a>
+                    <a class="nav-link" href="/health-blogs">Blog</a>
+                    <a class="nav-link" href="/health-documents/popular">Phổ biến</a>
+                    <a class="nav-link" href="/health-documents/with-files">Có file đính kèm</a>
+                    <a class="nav-link" href="/health-documents/statistics">Thống kê</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mt-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/health-documents">Tài liệu</a></li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${document.title}">Chi tiết</li>
+            </ol>
+        </nav>
+
+        <!-- Document Content -->
+        <div class="row mt-4">
+            <div class="col-lg-8">
+                <!-- Document Header -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h1 class="card-title" th:text="${document.title}">Tiêu đề tài liệu</h1>
+                        
+                        <div class="mb-3">
+                            <span class="badge bg-primary me-2" th:text="${document.categoryDisplayName}">Danh mục</span>
+                            <span class="badge bg-secondary me-2" th:text="${document.typeDisplayName}">Loại</span>
+                            <span class="badge bg-info" th:text="${document.viewCount} + ' lượt xem'">0 lượt xem</span>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-user"></i> <span th:text="${document.author}">Tác giả</span>
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-calendar"></i> 
+                                <span th:text="${#temporals.format(document.createdAt, 'dd/MM/yyyy HH:mm')}">Ngày tạo</span>
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-clock"></i> 
+                                <span th:text="${#temporals.format(document.updatedAt, 'dd/MM/yyyy HH:mm')}">Cập nhật</span>
+                            </small>
+                        </div>
+                        
+                        <div class="mb-3" th:if="${document.source != null and document.source != ''}">
+                            <small class="text-muted">
+                                <i class="fas fa-link"></i> Nguồn: <span th:text="${document.source}">Nguồn</span>
+                            </small>
+                        </div>
+                        
+                        <div class="mb-3" th:if="${document.tags != null and document.tags.size() > 0}">
+                            <i class="fas fa-tags text-muted me-2"></i>
+                            <span class="badge bg-light text-dark me-1" 
+                                  th:each="tag : ${document.tags}" 
+                                  th:text="${tag}">Tag</span>
+                        </div>
+                        
+                        <div class="mb-3" th:if="${document.fileUrl != null and document.fileUrl != ''}">
+                            <a th:href="${document.fileUrl}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                <i class="fas fa-download"></i> Tải xuống tài liệu 
+                                <span th:if="${document.fileType != null}" th:text="'(' + ${document.fileType} + ')'">(PDF)</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Summary -->
+                <div class="card mb-4" th:if="${document.summary != null and document.summary != ''}">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Tóm tắt</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text" th:text="${document.summary}">Tóm tắt tài liệu</p>
+                    </div>
+                </div>
+
+                <!-- Document Content -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-text"></i> Nội dung</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="document-content" th:utext="${document.content}">
+                            Nội dung tài liệu
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <a th:href="@{/health-documents/{id}/edit(id=${document.id})}" class="btn btn-outline-secondary">
+                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                </a>
+                                <button type="button" class="btn btn-outline-danger ms-2" 
+                                        th:onclick="'deleteDocument(' + ${document.id} + ')'">
+                                    <i class="fas fa-trash"></i> Xóa
+                                </button>
+                            </div>
+                            <div>
+                                <a href="/health-documents" class="btn btn-primary">
+                                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Related Documents -->
+                <div class="card mb-4" th:if="${relatedDocuments != null and relatedDocuments.size() > 0}">
+                    <div class="card-header">
+                        <h5><i class="fas fa-link"></i> Tài liệu liên quan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group list-group-flush">
+                            <a th:each="relatedDoc : ${relatedDocuments}" 
+                               th:href="@{/health-documents/{id}(id=${relatedDoc.id})}"
+                               class="list-group-item list-group-item-action"
+                               th:if="${relatedDoc.id != document.id}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1" th:text="${relatedDoc.title}">Tiêu đề</h6>
+                                    <small class="text-muted" th:text="${relatedDoc.categoryDisplayName}">Danh mục</small>
+                                </div>
+                                <p class="mb-1 text-muted" th:text="${relatedDoc.summary}">Tóm tắt</p>
+                                <small class="text-muted">
+                                    <i class="fas fa-eye"></i> <span th:text="${relatedDoc.viewCount}">0</span> lượt xem
+                                </small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Document Info -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle"></i> Thông tin tài liệu</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Danh mục:</strong></td>
+                                <td th:text="${document.categoryDisplayName}">Danh mục</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Loại:</strong></td>
+                                <td th:text="${document.typeDisplayName}">Loại</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tác giả:</strong></td>
+                                <td th:text="${document.author}">Tác giả</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lượt xem:</strong></td>
+                                <td th:text="${document.viewCount}">0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ngày tạo:</strong></td>
+                                <td th:text="${#temporals.format(document.createdAt, 'dd/MM/yyyy')}">Ngày</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cập nhật:</strong></td>
+                                <td th:text="${#temporals.format(document.updatedAt, 'dd/MM/yyyy')}">Ngày</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-bolt"></i> Thao tác nhanh</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="/health-documents/create" class="btn btn-success btn-sm">
+                                <i class="fas fa-plus"></i> Thêm tài liệu mới
+                            </a>
+                            <a href="/health-documents/popular" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-fire"></i> Tài liệu phổ biến
+                            </a>
+                            <a href="/health-documents/with-files" class="btn btn-outline-info btn-sm">
+                                <i class="fas fa-file"></i> Có file đính kèm
+                            </a>
+                            <a href="/health-documents/statistics" class="btn btn-outline-secondary btn-sm">
+                                <i class="fas fa-chart-bar"></i> Thống kê
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận xóa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa tài liệu này không?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <form id="deleteForm" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function deleteDocument(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa tài liệu này không?')) {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/health-documents/' + id + '/delete';
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+</body>
+</html> 
