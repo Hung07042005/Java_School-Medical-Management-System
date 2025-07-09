@@ -305,9 +305,34 @@
                             <i class="fas fa-users me-1"></i>Danh sách Học sinh
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
                         <a class="nav-link" th:href="@{/medical-records/view-select-student}">
-                            <i class="fas fa-file-medical me-1"></i>Xem Hồ sơ Y tế
+                            <i class="fas fa-file-medical me-1"></i>Quản lý Hồ sơ Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
+                        <a class="nav-link" th:href="@{/campaigns}">
+                            <i class="fas fa-syringe me-1"></i>Quản lý Chiến dịch Tiêm chủng
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/nurse/record-event}">
+                            <i class="fas fa-calendar-check me-1"></i>Ghi nhận Sự kiện Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/nurse/event-list}">
+                            <i class="fas fa-history me-1"></i>Lịch sử Sự kiện Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/campaigns}">
+                            <i class="fas fa-syringe me-1"></i>Xem Chiến dịch Tiêm chủng
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/vaccinations}">
+                            <i class="fas fa-vaccine me-1"></i>Ghi nhận Tiêm chủng
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('PARENT')">
@@ -315,14 +340,9 @@
                             <i class="fas fa-file-medical me-1"></i>Khai báo Hồ sơ
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
-                        <a class="nav-link" th:href="@{/nurse/medical-supplies}">
-                            <i class="fas fa-pills me-1"></i>Vật tư y tế
-                        </a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
-                        <a class="nav-link" th:href="@{/campaigns}">
-                            <i class="fas fa-syringe me-1"></i>Tiêm chủng
+                    <li class="nav-item" sec:authorize="hasRole('PARENT')">
+                        <a class="nav-link" th:href="@{/parent/send-medicine}">
+                            <i class="fas fa-pills me-1"></i>Gửi Thuốc cho Con
                         </a>
                     </li>
                     <li class="nav-item">
@@ -405,7 +425,7 @@
         <!-- Features Section -->
         <div class="row g-4">
             <!-- Student Management -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+            <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                 <div class="feature-card slide-in-left">
                     <div class="feature-icon">
                         <i class="fas fa-users"></i>
@@ -421,100 +441,8 @@
                 </div>
             </div>
 
-            <!-- Medical Records -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
-                <div class="feature-card slide-in-right">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-medical"></i>
-                    </div>
-                    <h3 class="feature-title">Hồ sơ Y tế</h3>
-                    <p class="feature-description">
-                        Lưu trữ và quản lý hồ sơ sức khỏe, tiền sử bệnh, dị ứng 
-                        và các thông tin y tế quan trọng của học sinh.
-                    </p>
-                    <div sec:authorize="hasRole('PARENT')">
-                        <a th:href="@{/medical-records/select-student}" class="feature-link">
-                            Chọn học sinh để khai báo <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                    <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
-                        <a th:href="@{/medical-records/view-select-student}" class="feature-link">
-                            Xem hồ sơ <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Medical Events -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('NURSE')">
-                <div class="feature-card slide-in-left">
-                    <div class="feature-icon">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h3 class="feature-title">Sự kiện Y tế</h3>
-                    <p class="feature-description">
-                        Ghi nhận và theo dõi các sự kiện y tế, tai nạn, 
-                        bệnh tật xảy ra tại trường học.
-                    </p>
-                    <a th:href="@{/nurse/record-event}" class="feature-link">
-                        Ghi nhận sự kiện <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Medical Supplies -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('NURSE', 'ADMIN', 'MANAGER')">
-                <div class="feature-card slide-in-right">
-                    <div class="feature-icon">
-                        <i class="fas fa-pills"></i>
-                    </div>
-                    <h3 class="feature-title">Quản lý Thuốc</h3>
-                    <p class="feature-description">
-                        Quản lý thuốc phụ huynh gửi, theo dõi việc sử dụng 
-                        và đảm bảo an toàn khi cho học sinh uống thuốc.
-                    </p>
-                    <a th:href="@{/nurse/medical-supplies}" class="feature-link">
-                        Quản lý thuốc <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Vaccination Campaigns -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('MANAGER')">
-                <div class="feature-card slide-in-left">
-                    <div class="feature-icon">
-                        <i class="fas fa-syringe"></i>
-                    </div>
-                    <h3 class="feature-title">Chiến dịch Tiêm chủng</h3>
-                    <p class="feature-description">
-                        Lập kế hoạch và quản lý các chiến dịch tiêm chủng, 
-                        theo dõi tiến độ và kết quả tiêm chủng.
-                    </p>
-                    <a th:href="@{/campaigns}" class="feature-link">
-                        Quản lý chiến dịch <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Parent Medicine -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasRole('PARENT')">
-                <div class="feature-card slide-in-right">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <h3 class="feature-title">Gửi Thuốc cho Con</h3>
-                    <p class="feature-description">
-                        Phụ huynh có thể gửi thuốc cho con em mình 
-                        và theo dõi việc sử dụng thuốc tại trường.
-                    </p>
-                    <a th:href="@{/parent/send-medicine}" class="feature-link">
-                        Gửi thuốc <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
             <!-- Health Documents -->
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="feature-card slide-in-left">
                     <div class="feature-icon">
                         <i class="fas fa-book-medical"></i>
@@ -531,7 +459,7 @@
             </div>
 
             <!-- Health Blog -->
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="feature-card slide-in-right">
                     <div class="feature-icon">
                         <i class="fas fa-blog"></i>
@@ -547,50 +475,170 @@
                 </div>
             </div>
         </div>
-        <div class="row g-4 mt-4" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
-            <div class="col-lg-4 col-md-6"sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mx-auto">
-                        <i class="fas fa-plus-circle"></i>
+
+        <!-- Parent Features Section -->
+        <div class="row g-4 mt-4" sec:authorize="hasRole('PARENT')">
+            <div class="col-12">
+                <h2 class="text-center mb-4" style="color: #2c3e50; font-weight: 600;">
+                    <i class="fas fa-user-friends me-2"></i>Chức năng dành cho Phụ huynh
+                </h2>
+            </div>
+            
+            <!-- Khai báo Hồ sơ Sức khỏe -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
                     </div>
-                    <h3 class="feature-title">Tạo đợt kiểm tra y tế</h3>
+                    <h3 class="feature-title">Khai báo Hồ sơ Sức khỏe</h3>
                     <p class="feature-description">
-                        Nhân viên y tế và quản trị viên có thể tạo đợt kiểm tra y tế mới cho học sinh.
+                        Khai báo thông tin sức khỏe của con em, bao gồm tiền sử bệnh, 
+                        dị ứng, thông tin liên hệ khẩn cấp và các thông tin y tế quan trọng.
                     </p>
-                    <a th:href="@{/medical-checks/create}" class="btn btn-primary">
-                        Tạo mới <i class="fas fa-arrow-right"></i>
+                    <a th:href="@{/medical-records/select-student}" class="feature-link">
+                        Khai báo ngay <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mx-auto">
-                        <i class="fas fa-list-alt"></i>
+
+            <!-- Gửi Thuốc cho Con -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-pills"></i>
                     </div>
-                    <h3 class="feature-title">Danh sách đợt kiểm tra y tế</h3>
+                    <h3 class="feature-title">Gửi Thuốc cho Con</h3>
                     <p class="feature-description">
-                        Xem và quản lý danh sách các đợt kiểm tra y tế đã được tạo.
+                        Gửi thuốc cho con em tại trường học, theo dõi việc sử dụng 
+                        và đảm bảo an toàn khi cho học sinh uống thuốc.
                     </p>
-                    <a th:href="@{/medical-checks/list}" class="btn btn-primary">
-                        Xem danh sách <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
-                <div class="feature-card text-center">
-                    <div class="feature-icon mx-auto">
-                        <i class="fas fa-child"></i>
-                    </div>
-                    <h3 class="feature-title">Đợt kiểm tra y tế của con</h3>
-                    <p class="feature-description">
-                        Phụ huynh có thể xem các đợt kiểm tra y tế của con em mình.
-                    </p>
-                    <a th:href="@{/medical-checks/parent/list}" class="btn btn-primary">
-                        Xem ngay <i class="fas fa-arrow-right"></i>
+                    <a th:href="@{/parent/send-medicine}" class="feature-link">
+                        Gửi thuốc <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
         </div>
+
+        <!-- Manager Features Section -->
+        <div class="row g-4 mt-4" sec:authorize="hasRole('MANAGER')">
+            <div class="col-12">
+                <h2 class="text-center mb-4" style="color: #2c3e50; font-weight: 600;">
+                    <i class="fas fa-user-tie me-2"></i>Chức năng dành cho Quản lý
+                </h2>
+            </div>
+            
+            <!-- Quản lý Hồ sơ Y tế -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <h3 class="feature-title">Quản lý Hồ sơ Y tế</h3>
+                    <p class="feature-description">
+                        Xem và quản lý hồ sơ sức khỏe của tất cả học sinh, 
+                        theo dõi thông tin y tế và đảm bảo tính đầy đủ của dữ liệu.
+                    </p>
+                    <a th:href="@{/medical-records/view-select-student}" class="feature-link">
+                        Quản lý hồ sơ <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quản lý Chiến dịch Tiêm chủng -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3 class="feature-title">Quản lý Chiến dịch Tiêm chủng</h3>
+                    <p class="feature-description">
+                        Tạo và quản lý các chiến dịch tiêm chủng, lập kế hoạch 
+                        và theo dõi tiến độ tiêm chủng cho học sinh.
+                    </p>
+                    <a th:href="@{/campaigns}" class="feature-link">
+                        Quản lý chiến dịch <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nurse Features Section -->
+        <div class="row g-4 mt-4" sec:authorize="hasRole('NURSE')">
+            <div class="col-12">
+                <h2 class="text-center mb-4" style="color: #2c3e50; font-weight: 600;">
+                    <i class="fas fa-user-nurse me-2"></i>Chức năng dành cho Y tá
+                </h2>
+            </div>
+            
+            <!-- Ghi nhận Sự kiện Y tế -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3 class="feature-title">Ghi nhận Sự kiện Y tế</h3>
+                    <p class="feature-description">
+                        Ghi nhận các sự kiện y tế, tai nạn, bệnh tật xảy ra tại trường học 
+                        và lưu trữ thông tin chi tiết để theo dõi.
+                    </p>
+                    <a th:href="@{/nurse/record-event}" class="feature-link">
+                        Ghi nhận sự kiện <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Lịch sử Sự kiện Y tế -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="feature-title">Lịch sử Sự kiện Y tế</h3>
+                    <p class="feature-description">
+                        Xem danh sách và lịch sử các sự kiện y tế đã ghi nhận, 
+                        theo dõi và phân tích dữ liệu sự kiện.
+                    </p>
+                    <a th:href="@{/nurse/event-list}" class="feature-link">
+                        Xem lịch sử <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Xem Chiến dịch Tiêm chủng -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-left">
+                    <div class="feature-icon">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3 class="feature-title">Xem Chiến dịch Tiêm chủng</h3>
+                    <p class="feature-description">
+                        Xem thông tin các chiến dịch tiêm chủng được lập kế hoạch, 
+                        theo dõi lịch trình và chuẩn bị cho việc tiêm chủng.
+                    </p>
+                    <a th:href="@{/campaigns}" class="feature-link">
+                        Xem chiến dịch <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Ghi nhận Tiêm chủng -->
+            <div class="col-lg-6 col-md-6">
+                <div class="feature-card slide-in-right">
+                    <div class="feature-icon">
+                        <i class="fas fa-vaccine"></i>
+                    </div>
+                    <h3 class="feature-title">Ghi nhận Tiêm chủng</h3>
+                    <p class="feature-description">
+                        Ghi nhận việc tiêm chủng cho học sinh, cập nhật thông tin 
+                        và theo dõi lịch sử tiêm chủng của từng học sinh.
+                    </p>
+                    <a th:href="@{/vaccinations}" class="feature-link">
+                        Ghi nhận tiêm chủng <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <!-- About Section -->
         <div class="row mt-5">
             <div class="col-12">
