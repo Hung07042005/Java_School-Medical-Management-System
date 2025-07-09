@@ -362,6 +362,7 @@
                 </a>
             </div>
         </div>
+        
 
         <!-- Stats Section -->
         <div class="stats-section slide-in-left">
@@ -538,7 +539,50 @@
                 </div>
             </div>
         </div>
-
+        <div class="row g-4 mt-4" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
+            <div class="col-lg-4 col-md-6"sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3 class="feature-title">Tạo đợt kiểm tra y tế</h3>
+                    <p class="feature-description">
+                        Nhân viên y tế và quản trị viên có thể tạo đợt kiểm tra y tế mới cho học sinh.
+                    </p>
+                    <a th:href="@{/medical-checks/create}" class="btn btn-primary">
+                        Tạo mới <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Danh sách đợt kiểm tra y tế</h3>
+                    <p class="feature-description">
+                        Xem và quản lý danh sách các đợt kiểm tra y tế đã được tạo.
+                    </p>
+                    <a th:href="@{/medical-checks/list}" class="btn btn-primary">
+                        Xem danh sách <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <h3 class="feature-title">Đợt kiểm tra y tế của con</h3>
+                    <p class="feature-description">
+                        Phụ huynh có thể xem các đợt kiểm tra y tế của con em mình.
+                    </p>
+                    <a th:href="@{/medical-checks/parent/list}" class="btn btn-primary">
+                        Xem ngay <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
         <!-- About Section -->
         <div class="row mt-5">
             <div class="col-12">
