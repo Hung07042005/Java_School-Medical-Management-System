@@ -583,6 +583,69 @@
                 </div>
             </div>
         </div>
+          <!-- ADMIN, MANAGER, NURSE: Tạo đợt tiêm -->
+        <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+            <div class="feature-card text-center">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-plus-circle"></i>
+                </div>
+                <h3 class="feature-title">Tạo đợt tiêm chủng</h3>
+                <p class="feature-description">
+                    Tạo và quản lý các đợt tiêm chủng cho học sinh trong trường.
+                </p>
+                <a th:href="@{/vaccines/new}" class="btn btn-primary">
+                    Tạo mới <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+    <!-- ADMIN, MANAGER, NURSE: Danh sách đợt tiêm -->
+        <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+            <div class="feature-card text-center">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <h3 class="feature-title">Danh sách đợt tiêm</h3>
+                <p class="feature-description">
+                    Xem và theo dõi chi tiết các đợt tiêm chủng đã được tổ chức.
+                </p>
+                <a th:href="@{/vaccines}" class="btn btn-primary">
+                    Xem danh sách <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+    <!-- PARENT: Xác nhận tiêm -->
+        {% comment %} <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')"> {% endcomment %}
+            <div class="feature-card text-center">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-check-square"></i>
+                </div>
+                <h3 class="feature-title">Xác nhận tiêm chủng</h3>
+                <p class="feature-description">
+                    Phụ huynh xác nhận đồng ý hoặc từ chối tiêm cho con em.
+                </p>
+                <a th:href="@{'/vaccination/parent/consent/' + ${parentId}}" class="btn btn-warning">
+                    Xác nhận ngay <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+
+    <!-- PARENT: Xem kết quả tiêm -->
+        <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
+            <div class="feature-card text-center">
+                <div class="feature-icon mx-auto">
+                    <i class="fas fa-syringe"></i>
+                </div>
+                <h3 class="feature-title">Kết quả tiêm chủng của con</h3>
+                <p class="feature-description">
+                    Xem thông tin vắc-xin, phản ứng sau tiêm và tình trạng sức khỏe của con.
+                </p>
+                <a th:href="@{'/parent/vaccination-results/' + ${parent.id}}" class="btn btn-success">
+                    Xem kết quả <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
         <!-- About Section -->
         <div class="row mt-5">
             <div class="col-12">

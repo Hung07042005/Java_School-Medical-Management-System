@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Parent;
 import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 // import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.example.demo.dto.StudentDTO; // Import StudentDTO
 
@@ -48,7 +48,6 @@ public class StudentService {
             student = studentRepository.findById(studentDTO.getId())
                                      .orElseThrow(() -> new RuntimeException("Student not found with ID: " + studentDTO.getId()));
             // Cập nhật các trường từ DTO vào Entity hiện có
-            student.setUsername(studentDTO.getUsername());
             student.setFullName(fullNameChuanHoa);
             student.setEmail(studentDTO.getEmail());
             student.setPhoneNumber(studentDTO.getPhoneNumber());
@@ -59,9 +58,7 @@ public class StudentService {
             // Password sẽ được xử lý riêng (ví dụ: đổi mật khẩu)
         } else { // Nếu không có ID, tức là thêm mới
             student = new Student();
-            student.setUsername(studentDTO.getUsername());
-            // Mật khẩu tạm thời hoặc sẽ được đặt sau (ví dụ: random, hoặc yêu cầu đặt khi đăng ký)
-            // Cần có logic để quản lý mật khẩu an toàn
+            student.setUsername(fullNameChuanHoa); // Tạm thời để vượt qua lỗi nullable = false
             student.setPassword("temp_password"); // Tạm thời để vượt qua lỗi nullable = false
             student.setFullName(fullNameChuanHoa);
             student.setEmail(studentDTO.getEmail());
@@ -77,21 +74,6 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public List<Student> getStudentsByCampaign(Long campaignId) {
-        return studentRepository.findStudentsByCampaignId(campaignId);
-    }
-
-    public List<Student> getStudentsByCampaignAndClass(Long campaignId, String studentClass) {
-        return studentRepository.findStudentsByCampaignIdAndClass(campaignId, studentClass);
-    }
-
-    public List<String> getClassListFromCampaign(Long campaignId) {
-        return studentRepository.findStudentsByCampaignId(campaignId).stream()
-                .map(Student::getStudentClass)
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
-    }
     
     public List<String> findAllClassNames() {
         return studentRepository.findAllClassNames();
@@ -112,6 +94,9 @@ public class StudentService {
      public List<Student> getStudentByParentID( Long parent_Id) {
         return studentRepository.findStudentsByParentId(parent_Id);
     }
-
+    public List<Student> findByParent(Parent parent) {
+        return studentRepository.findByParent(parent);
+    }
+    
     
 }

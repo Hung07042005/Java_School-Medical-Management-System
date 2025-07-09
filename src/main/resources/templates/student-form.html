@@ -143,11 +143,7 @@
         <div class="main-container mx-auto">
             <h1 class="mb-4 text-center" th:text="${student.id == null ? 'Thêm học sinh mới' : 'Chỉnh sửa học sinh'}"></h1>
             <form th:action="@{/students}" th:object="${student}" method="post">
-                <input type="hidden" th:field="*{id}" />
-                <div class="mb-3">
-                    <label for="username" class="form-label">Tên đăng nhập:</label>
-                    <input type="text" id="username" th:field="*{username}" class="form-control" required placeholder="Nhập tên đăng nhập" />
-                </div>
+                <input type="hidden" th:field="*{id}" />            
                 <div class="mb-3">
                     <label for="fullName" class="form-label">Họ và tên:</label>
                     <input type="text" id="fullName" th:field="*{fullName}" class="form-control" required placeholder="Nhập họ và tên" />

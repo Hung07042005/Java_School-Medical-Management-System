@@ -16,5 +16,4 @@ public interface IParentRepository extends JpaRepository<Parent, Long>{
     @Query("SELECT p FROM Parent p LEFT JOIN FETCH p.children WHERE p.id = :id")
     Optional<Parent> findParentByIDWithChildren(@Param("id") Long id);
 
-
 }

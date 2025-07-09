@@ -21,6 +21,7 @@ public class ParentService {
     private StudentRepository studentRepository;
 
     public Parent saveParent(Parent parent){
+        
         return parentRepository.save(parent);
     }
 
@@ -38,5 +39,9 @@ public class ParentService {
             studentRepository.save(student); 
         }
         parentRepository.delete(parent);
+    }
+    
+    public Optional<Parent> findById(Long parent_ID) {
+        return parentRepository.findById(parent_ID);
     }
 }

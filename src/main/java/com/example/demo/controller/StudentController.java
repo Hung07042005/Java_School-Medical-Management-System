@@ -55,7 +55,6 @@ public class StudentController {
             // Chuyển đổi Entity Student sang StudentDTO để hiển thị trên form
             StudentDTO studentDTO = new StudentDTO(
                 student.getId(),
-                student.getUsername(),
                 student.getFullName(),
                 student.getEmail(),
                 student.getPhoneNumber(),
@@ -77,6 +76,7 @@ public class StudentController {
     // Hoặc @GetMapping("/delete/{id}") nếu bạn muốn dùng link đơn giản
     public String deleteStudent(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         try {
+            
             studentService.deleteStudent(id);
             redirectAttributes.addFlashAttribute("message", "Student deleted successfully!");
             redirectAttributes.addFlashAttribute("alertClass", "alert-success");
@@ -86,10 +86,4 @@ public class StudentController {
         }
         return "redirect:/students"; // Chuyển hướng về trang danh sách
     }
-
-    // Bạn có thể giữ lại HelloController cũ nếu muốn, hoặc bỏ đi
-    // @GetMapping("/")
-    // public String hello() {
-    //     return "Hello from Spring Boot! Your application is running.";
-    // }
 }
