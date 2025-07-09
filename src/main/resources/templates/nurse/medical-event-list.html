@@ -63,23 +63,24 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Danh sách sự kiện y tế đã ghi nhận</h2>
+  <div sec:authorize="hasAnyRole('NURSE','MANAGER')">
+    <div class="container">
+      <h2>Danh sách sự kiện y tế đã ghi nhận</h2>
 
-    <table>
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>Mã số HS</th>
-          <th>Họ tên HS</th>
-          <th>Loại sự kiện</th>
-          <th>Thời gian</th>
-          <th>Nhân viên y tế</th>
-          <th>Mô tả</th>
-          <th>Xử lý</th>
-        </tr>
-      </thead>
-      <tbody>
+      <table>
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã số HS</th>
+            <th>Họ tên HS</th>
+            <th>Loại sự kiện</th>
+            <th>Thời gian</th>
+            <th>Nhân viên y tế</th>
+            <th>Mô tả</th>
+            <th>Xử lý</th>
+          </tr>
+        </thead>
+        <tbody>
 <tr th:each="event, iterStat : ${events}">
   <td th:text="${iterStat.index + 1}"></td>
   <td th:text="${event.studentId}"></td>
@@ -92,7 +93,8 @@
 </tr>
 </tbody>
 
-    </table>
+      </table>
+    </div>
   </div>
 </body>
 </html>

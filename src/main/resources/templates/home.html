@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -305,11 +305,6 @@
                             <i class="fas fa-users me-1"></i>Danh sách Học sinh
                         </a>
                     </li>
-                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
-                        <a class="nav-link" th:href="@{/medical-records/view-select-student}">
-                            <i class="fas fa-file-medical me-1"></i>Xem Hồ sơ Y tế
-                        </a>
-                    </li>
                     <li class="nav-item" sec:authorize="hasRole('PARENT')">
                         <a class="nav-link" th:href="@{/medical-records/select-student}">
                             <i class="fas fa-file-medical me-1"></i>Khai báo Hồ sơ
@@ -325,12 +320,12 @@
                             <i class="fas fa-syringe me-1"></i>Tiêm chủng
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                         <a class="nav-link" th:href="@{/health-documents}">
                             <i class="fas fa-book-medical me-1"></i>Tài liệu Y tế
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                         <a class="nav-link" th:href="@{/health-blogs}">
                             <i class="fas fa-blog me-1"></i>Blog Sức khỏe
                         </a>
@@ -341,14 +336,11 @@
                         <span class="text-muted">Xin chào, <strong sec:authentication="name"></strong></span>
                     </div>
                     <div sec:authorize="isAuthenticated()">
-                        <a class="btn btn-outline-danger" th:href="@{/logout}">
-                            <i class="fas fa-sign-out-alt me-1"></i>Logout
-                        </a>
-                    </div>
-                    <div sec:authorize="isAnonymous()">
-                        <a class="btn btn-primary" th:href="@{/login}">
-                            <i class="fas fa-sign-in-alt me-1"></i>Login
-                        </a>
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -421,7 +413,7 @@
             </div>
 
             <!-- Medical Records -->
-            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('MANAGER', 'NURSE', 'PARENT')">
                 <div class="feature-card slide-in-right">
                     <div class="feature-icon">
                         <i class="fas fa-file-medical"></i>
@@ -436,7 +428,7 @@
                             Chọn học sinh để khai báo <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                    <div sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                    <div sec:authorize="hasAnyRole('MANAGER', 'NURSE')">
                         <a th:href="@{/medical-records/view-select-student}" class="feature-link">
                             Xem hồ sơ <i class="fas fa-arrow-right"></i>
                         </a>
@@ -513,7 +505,7 @@
             </div>
 
             <!-- Health Documents -->
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                 <div class="feature-card slide-in-left">
                     <div class="feature-icon">
                         <i class="fas fa-book-medical"></i>
@@ -530,7 +522,7 @@
             </div>
 
             <!-- Health Blog -->
-            <div class="col-lg-6 col-md-6">
+            <div class="col-lg-6 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                 <div class="feature-card slide-in-right">
                     <div class="feature-icon">
                         <i class="fas fa-blog"></i>

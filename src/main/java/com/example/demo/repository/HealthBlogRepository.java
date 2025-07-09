@@ -78,4 +78,7 @@ public interface HealthBlogRepository extends JpaRepository<HealthBlog, Long> {
     // Tăng lượt thích
     @Query("UPDATE HealthBlog hb SET hb.likeCount = hb.likeCount + 1 WHERE hb.id = :id")
     void incrementLikeCount(@Param("id") Long id);
+
+    @Query("SELECT hb FROM HealthBlog hb LEFT JOIN FETCH hb.tags WHERE hb.id = :id")
+    HealthBlog findByIdWithTags(@Param("id") Long id);
 } 

@@ -1,198 +1,601 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tài liệu Sức khỏe Học đường</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link th:href="@{/css/custom-styles.css}" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --info-color: #3b82f6;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--gray-800);
+        }
+
+        /* Modern Navbar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            color: var(--accent-color);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--gray-600) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color) !important;
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        .navbar-nav .nav-link.active {
+            color: var(--primary-color) !important;
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            max-width: 800px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.6;
+        }
+
+        /* Document Cards */
+        .document-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .document-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .document-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .document-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .document-summary {
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .document-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--gray-500);
+        }
+
+        .document-badges {
+            margin-bottom: 1rem;
+        }
+
+        .document-tags {
+            margin-bottom: 1.5rem;
+        }
+
+        .document-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-modern {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+            color: white;
+        }
+
+        .btn-outline-modern {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-modern:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Search and Filter Section */
+        .search-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--gray-200);
+            color: var(--gray-600);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Pagination */
+        .pagination-modern {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .page-link-modern {
+            background: transparent;
+            border: 1px solid var(--gray-200);
+            color: var(--gray-600);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin: 0 0.25rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .page-link-modern:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .page-link-modern.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray-600);
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+            
+            .document-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <!-- Header -->
-        <div class="row bg-primary text-white p-3">
-            <div class="col">
-                <h1><i class="fas fa-book-medical"></i> Tài liệu Sức khỏe Học đường</h1>
-                <p class="mb-0">Thư viện tài liệu về sức khỏe và y tế học đường</p>
-            </div>
-        </div>
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Trang chủ</a>
-                <div class="navbar-nav">
-                    <a class="nav-link" href="/health-documents">Tài liệu</a>
-                    <a class="nav-link" href="/health-blogs">Blog</a>
-                    <a class="nav-link" href="/health-documents/popular">Phổ biến</a>
-                    <a class="nav-link" href="/health-documents/with-files">Có file đính kèm</a>
-                    <a class="nav-link" href="/health-documents/statistics">Thống kê</a>
+    <!-- Modern Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="fas fa-heartbeat"></i>
+                SchoolMed
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/students}">
+                            <i class="fas fa-users me-1"></i>Danh sách Học sinh
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/medical-records/view-select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Xem Hồ sơ Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('PARENT')">
+                        <a class="nav-link" th:href="@{/medical-records/select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Khai báo Hồ sơ
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/nurse/medical-supplies}">
+                            <i class="fas fa-pills me-1"></i>Vật tư y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
+                        <a class="nav-link" th:href="@{/campaigns}">
+                            <i class="fas fa-syringe me-1"></i>Tiêm chủng
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link active" th:href="@{/health-documents}">
+                            <i class="fas fa-book-medical me-1"></i>Tài liệu Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/health-blogs}">
+                            <i class="fas fa-blog me-1"></i>Blog Sức khỏe
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div sec:authorize="isAuthenticated()" class="me-3">
+                        <span class="text-muted">Xin chào, <strong sec:authentication="name"></strong></span>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-outline-danger">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </button>
+                        </form>
+                    </div>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-primary" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                        </a>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container" style="margin-top: 100px;">
+        <!-- Hero Section -->
+        <div class="hero-section fade-in">
+            <h1 class="hero-title">
+                <i class="fas fa-book-medical me-3"></i>Tài liệu Sức khỏe Học đường
+            </h1>
+            <p class="hero-subtitle">
+                Thư viện tài liệu về sức khỏe và y tế học đường, cung cấp thông tin hữu ích 
+                cho học sinh, phụ huynh và nhân viên y tế trường học.
+            </p>
+        </div>
 
         <!-- Search and Filter Section -->
-        <div class="row mt-3">
-            <div class="col-md-8">
-                <form th:action="@{/health-documents}" method="get" class="d-flex">
-                    <input type="text" name="search" th:value="${search}" class="form-control me-2" 
-                           placeholder="Tìm kiếm tài liệu...">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Tìm kiếm
-                    </button>
-                </form>
+        <div class="search-section slide-in-left">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <form th:action="@{/health-documents}" method="get" class="d-flex">
+                        <input type="text" name="search" th:value="${search}" 
+                               class="form-control me-2" 
+                               placeholder="Tìm kiếm tài liệu..."
+                               style="border-radius: 25px; padding: 0.75rem 1.5rem;">
+                        <button type="submit" class="btn-modern">
+                            <i class="fas fa-search me-1"></i>Tìm kiếm
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-4 text-end">
+                    <!-- Nút tạo tài liệu chỉ cho ADMIN -->
+                    <a sec:authorize="hasRole('ADMIN')" href="/health-documents/create" class="btn-modern">
+                        <i class="fas fa-plus me-1"></i>Thêm tài liệu
+                    </a>
+                </div>
             </div>
-            <div class="col-md-4 text-end">
-                <a href="/health-documents/create" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Thêm tài liệu mới
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons">
+                <a th:href="@{/health-documents}" 
+                   th:class="${selectedCategory == null and selectedType == null} ? 'filter-btn active' : 'filter-btn'">
+                    Tất cả
+                </a>
+                <a th:each="category : ${categories}" 
+                   th:href="@{/health-documents(category=${category.name})}"
+                   th:text="${category.displayName}"
+                   th:class="${selectedCategory == category.name} ? 'filter-btn active' : 'filter-btn'">
+                </a>
+                <a th:each="type : ${types}" 
+                   th:href="@{/health-documents(type=${type.name})}"
+                   th:text="${type.displayName}"
+                   th:class="${selectedType == type.name} ? 'filter-btn active' : 'filter-btn'">
                 </a>
             </div>
         </div>
 
-        <!-- Filter Options -->
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <div class="btn-group" role="group">
-                    <a th:href="@{/health-documents}" class="btn btn-outline-primary">Tất cả</a>
-                    <a th:each="category : ${categories}" 
-                       th:href="@{/health-documents(category=${category.name})}"
-                       th:text="${category.displayName}"
-                       th:class="${selectedCategory == category.name} ? 'btn btn-primary' : 'btn btn-outline-primary'"
-                       class="btn btn-outline-primary"></a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="btn-group" role="group">
-                    <a th:each="type : ${types}" 
-                       th:href="@{/health-documents(type=${type.name})}"
-                       th:text="${type.displayName}"
-                       th:class="${selectedType == type.name} ? 'btn btn-primary' : 'btn btn-outline-secondary'"
-                       class="btn btn-outline-secondary"></a>
+        <!-- Documents List -->
+        <div class="row g-4" th:if="${documents.content.size() > 0}">
+            <div class="col-md-6 col-lg-4" th:each="document : ${documents.content}">
+                <div class="document-card slide-in-left">
+                    <h3 class="document-title" th:text="${document.title}">Tiêu đề tài liệu</h3>
+                    <p class="document-summary" th:text="${document.summary}">Tóm tắt tài liệu</p>
+                    
+                    <div class="document-badges">
+                        <span class="badge bg-primary me-1" th:text="${document.categoryDisplayName}">Danh mục</span>
+                        <span class="badge bg-secondary" th:text="${document.typeDisplayName}">Loại</span>
+                    </div>
+                    
+                    <div class="document-meta">
+                        <span><i class="fas fa-user me-1"></i><span th:text="${document.author}">Tác giả</span></span>
+                        <span><i class="fas fa-eye me-1"></i><span th:text="${document.viewCount}">0</span> lượt xem</span>
+                    </div>
+                    
+                    <div class="document-tags" th:if="${document.tags != null and !document.tags.isEmpty()}">
+                        <span class="badge bg-light text-dark me-1" 
+                              th:each="tag : ${document.tags}" 
+                              th:text="${tag}">Tag</span>
+                    </div>
+                    
+                    <div class="document-actions">
+                        <a th:href="@{/health-documents/{id}(id=${document.id})}" 
+                           class="btn-modern">
+                            <i class="fas fa-eye me-1"></i>Xem chi tiết
+                        </a>
+                        <!-- Nút sửa/xóa tài liệu chỉ cho ADMIN -->
+                        <div>
+                            <a sec:authorize="hasRole('ADMIN')" th:href="@{/health-documents/{id}/edit(id=${document.id})}" class="btn-outline-modern">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button sec:authorize="hasRole('ADMIN')" type="button" class="btn-outline-modern" th:onclick="'deleteDocument(' + ${document.id} + ')'" style="margin-left: 0.5rem;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-calendar me-1"></i>
+                            <span th:text="${#temporals.format(document.createdAt, 'dd/MM/yyyy HH:mm')}">Ngày tạo</span>
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Documents List -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="row" th:if="${documents.content.size() > 0}">
-                    <div class="col-md-6 col-lg-4 mb-4" th:each="document : ${documents.content}">
-                        <div class="card h-100 shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${document.title}">Tiêu đề tài liệu</h5>
-                                <p class="card-text text-muted" th:text="${document.summary}">Tóm tắt tài liệu</p>
-                                
-                                <div class="mb-2">
-                                    <span class="badge bg-primary me-1" th:text="${document.categoryDisplayName}">Danh mục</span>
-                                    <span class="badge bg-secondary" th:text="${document.typeDisplayName}">Loại</span>
-                                </div>
-                                
-                                <div class="mb-2">
-                                    <small class="text-muted">
-                                        <i class="fas fa-user"></i> <span th:text="${document.author}">Tác giả</span>
-                                    </small>
-                                </div>
-                                
-                                <div class="mb-2">
-                                    <small class="text-muted">
-                                        <i class="fas fa-eye"></i> <span th:text="${document.viewCount}">0</span> lượt xem
-                                    </small>
-                                </div>
-                                
-                                <div class="mb-3" th:if="${document.tags != null and document.tags.size() > 0}">
-                                    <span class="badge bg-light text-dark me-1" 
-                                          th:each="tag : ${document.tags}" 
-                                          th:text="${tag}">Tag</span>
-                                </div>
-                                
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a th:href="@{/health-documents/{id}(id=${document.id})}" 
-                                       class="btn btn-primary btn-sm">
-                                        <i class="fas fa-eye"></i> Xem chi tiết
-                                    </a>
-                                    <div>
-                                        <a th:href="@{/health-documents/{id}/edit(id=${document.id})}" 
-                                           class="btn btn-outline-secondary btn-sm">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <button type="button" class="btn btn-outline-danger btn-sm" 
-                                                th:onclick="'deleteDocument(' + ${document.id} + ')'">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <small>
-                                    <i class="fas fa-calendar"></i> 
-                                    <span th:text="${#temporals.format(document.createdAt, 'dd/MM/yyyy HH:mm')}">Ngày tạo</span>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- No documents found -->
-                <div class="text-center py-5" th:if="${documents.content.size() == 0}">
-                    <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
-                    <h4 class="text-muted">Không tìm thấy tài liệu nào</h4>
-                    <p class="text-muted">Hãy thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác</p>
-                </div>
+        
+        <!-- No documents found -->
+        <div class="text-center py-5" th:if="${documents.content.size() == 0}">
+            <div class="hero-section">
+                <i class="fas fa-book-open fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">Không tìm thấy tài liệu nào</h4>
+                <p class="text-muted">Hãy thử tìm kiếm với từ khóa khác hoặc chọn danh mục khác</p>
             </div>
         </div>
 
         <!-- Pagination -->
-        <div class="row mt-4" th:if="${documents.totalPages > 1}">
-            <div class="col-12">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                            <a class="page-link" th:href="@{/health-documents(page=${currentPage - 1}, search=${search}, category=${selectedCategory}, type=${selectedType})}">
-                                <i class="fas fa-chevron-left"></i> Trước
-                            </a>
-                        </li>
-                        
-                        <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, documents.totalPages - 1)}"
-                            th:classappend="${pageNum == currentPage} ? 'active'">
-                            <a class="page-link" th:href="@{/health-documents(page=${pageNum}, search=${search}, category=${selectedCategory}, type=${selectedType})}"
-                               th:text="${pageNum + 1}">1</a>
-                        </li>
-                        
-                        <li class="page-item" th:classappend="${currentPage == documents.totalPages - 1} ? 'disabled'">
-                            <a class="page-link" th:href="@{/health-documents(page=${currentPage + 1}, search=${search}, category=${selectedCategory}, type=${selectedType})}">
-                                Sau <i class="fas fa-chevron-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+        <div class="pagination-modern" th:if="${documents.totalPages > 1}">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center mb-0">
+                    <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                        <a class="page-link-modern" th:href="@{/health-documents(page=${currentPage - 1}, search=${search}, category=${selectedCategory}, type=${selectedType})}">
+                            <i class="fas fa-chevron-left me-1"></i>Trước
+                        </a>
+                    </li>
+                    
+                    <li class="page-item" th:each="pageNum : ${#numbers.sequence(0, documents.totalPages - 1)}"
+                        th:classappend="${pageNum == currentPage} ? 'active'">
+                        <a class="page-link-modern" th:href="@{/health-documents(page=${pageNum}, search=${search}, category=${selectedCategory}, type=${selectedType})}"
+                           th:text="${pageNum + 1}">1</a>
+                    </li>
+                    
+                    <li class="page-item" th:classappend="${currentPage == documents.totalPages - 1} ? 'disabled'">
+                        <a class="page-link-modern" th:href="@{/health-documents(page=${currentPage + 1}, search=${search}, category=${selectedCategory}, type=${selectedType})}">
+                            Sau<i class="fas fa-chevron-right ms-1"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
         <!-- Statistics Summary -->
-        <div class="row mt-4">
-            <div class="col-12">
-                <div class="card bg-light">
-                    <div class="card-body">
-                        <h6 class="card-title">Thống kê nhanh</h6>
-                        <div class="row text-center">
-                            <div class="col-md-3">
-                                <h4 class="text-primary" th:text="${totalItems}">0</h4>
-                                <small class="text-muted">Tài liệu</small>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="text-success" th:text="${categories.size()}">0</h4>
-                                <small class="text-muted">Danh mục</small>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="text-info" th:text="${types.size()}">0</h4>
-                                <small class="text-muted">Loại tài liệu</small>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="text-warning" th:text="${currentPage + 1}">1</h4>
-                                <small class="text-muted">Trang hiện tại</small>
-                            </div>
-                        </div>
+        <div class="stats-section slide-in-right">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" th:text="${totalItems}">0</div>
+                        <div class="stat-label">Tài liệu</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" th:text="${categories.size()}">0</div>
+                        <div class="stat-label">Danh mục</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" th:text="${types.size()}">0</div>
+                        <div class="stat-label">Loại tài liệu</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-item">
+                        <div class="stat-number" th:text="${currentPage + 1}">1</div>
+                        <div class="stat-label">Trang hiện tại</div>
                     </div>
                 </div>
             </div>
@@ -220,7 +623,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         function deleteDocument(id) {
             if (confirm('Bạn có chắc chắn muốn xóa tài liệu này không?')) {

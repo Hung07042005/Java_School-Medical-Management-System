@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,74 @@
     <link th:href="@{/css/custom-styles.css}" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #2b6777 0%, #4a90a4 100%);">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}">
+                <i class="fas fa-heartbeat me-2"></i>SchoolMed
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/students}">
+                            <i class="fas fa-users me-1"></i>Danh sách Học sinh
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/medical-records/view-select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Xem Hồ sơ Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('PARENT')">
+                        <a class="nav-link" th:href="@{/medical-records/select-student}">
+                            <i class="fas fa-file-medical me-1"></i>Khai báo Hồ sơ
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('NURSE')">
+                        <a class="nav-link" th:href="@{/nurse/medical-supplies}">
+                            <i class="fas fa-pills me-1"></i>Vật tư y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasRole('MANAGER')">
+                        <a class="nav-link" th:href="@{/campaigns}">
+                            <i class="fas fa-syringe me-1"></i>Tiêm chủng
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link" th:href="@{/health-documents}">
+                            <i class="fas fa-book-medical me-1"></i>Tài liệu Y tế
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                        <a class="nav-link active" th:href="@{/health-blogs}">
+                            <i class="fas fa-blog me-1"></i>Blog Sức khỏe
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt me-1"></i>Đăng nhập
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="d-inline">
+                            <button type="submit" class="nav-link btn btn-link p-0">
+                                <i class="fas fa-sign-out-alt me-1"></i>Đăng xuất
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-4">
         <div class="row">
             <div class="col-lg-8 mx-auto">
@@ -78,7 +146,8 @@
                                 <a href="/health-blogs" class="btn btn-secondary">
                                     <i class="fas fa-arrow-left"></i> Quay lại
                                 </a>
-                                <button type="submit" class="btn btn-success">
+                                <!-- Nút lưu chỉ cho ADMIN -->
+                                <button sec:authorize="hasRole('ADMIN')" type="submit" class="btn btn-success">
                                     <i class="fas fa-save"></i> Lưu
                                 </button>
                             </div>

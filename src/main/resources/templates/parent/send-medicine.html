@@ -15,6 +15,8 @@
   </style>
 </head>
 <body>
+<div sec:authorize="hasRole('PARENT')">
+    <!-- Toàn bộ nội dung gửi thuốc cho con nằm trong đây -->
 <div class="container">
   <h2>Gửi thuốc cho học sinh</h2>
 <!-- Hiển thị thông báo nếu có ?success -->
@@ -52,6 +54,7 @@
 
     <button type="submit">Gửi thuốc</button>
   </form>
+</div>
 </div>
 </body>
 </html>

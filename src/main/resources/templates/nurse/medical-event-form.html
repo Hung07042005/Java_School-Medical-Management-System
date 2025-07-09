@@ -85,44 +85,46 @@
 </head>
 <body>
 
-    <div class="container">
-        <h2>Ghi nhận sự kiện y tế</h2>
+    <div sec:authorize="hasAnyRole('NURSE','MANAGER')">
+        <div class="container">
+            <h2>Ghi nhận sự kiện y tế</h2>
 
-        <form th:action="@{/nurse/record-event}" method="post">
+            <form th:action="@{/nurse/record-event}" method="post">
 
 
 
-            <!-- Mã số học sinh (ID) -->
-            <label for="studentId">Mã số học sinh:</label>
-            <input type="text" id="studentId" name="studentId" required>
+                <!-- Mã số học sinh (ID) -->
+                <label for="studentId">Mã số học sinh:</label>
+                <input type="text" id="studentId" name="studentId" required>
 
-            <label for="studentName">Họ tên học sinh:</label>
-            <input type="text" id="studentName" name="studentName" required>
+                <label for="studentName">Họ tên học sinh:</label>
+                <input type="text" id="studentName" name="studentName" required>
 
-            <label for="eventType">Loại sự kiện:</label>
-            <select id="eventType" name="eventType" required>
-                <option value="">-- Chọn loại --</option>
-                <option value="tai_nan">Tai nạn</option>
-                <option value="sot">Sốt</option>
-                <option value="te_nga">Té ngã</option>
-                <option value="dich_benh">Dịch bệnh</option>
-                <option value="khac">Khác</option>
-            </select>
+                <label for="eventType">Loại sự kiện:</label>
+                <select id="eventType" name="eventType" required>
+                    <option value="">-- Chọn loại --</option>
+                    <option value="tai_nan">Tai nạn</option>
+                    <option value="sot">Sốt</option>
+                    <option value="te_nga">Té ngã</option>
+                    <option value="dich_benh">Dịch bệnh</option>
+                    <option value="khac">Khác</option>
+                </select>
 
-            <label for="eventTime">Thời gian xảy ra:</label>
-            <input type="datetime-local" id="eventTime" name="eventTime" required>
+                <label for="eventTime">Thời gian xảy ra:</label>
+                <input type="datetime-local" id="eventTime" name="eventTime" required>
 
-            <label for="description">Mô tả sự kiện:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+                <label for="description">Mô tả sự kiện:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
 
-            <label for="actionTaken">Xử lý ban đầu:</label>
-            <textarea id="actionTaken" name="actionTaken" rows="4"></textarea>
+                <label for="actionTaken">Xử lý ban đầu:</label>
+                <textarea id="actionTaken" name="actionTaken" rows="4"></textarea>
 
-            <label for="nurseName">Nhân viên y tế ghi nhận:</label>
-            <input type="text" id="nurseName" name="nurseName" required>
+                <label for="nurseName">Nhân viên y tế ghi nhận:</label>
+                <input type="text" id="nurseName" name="nurseName" required>
 
-            <button type="submit">Ghi nhận sự kiện</button>
-        </form>
+                <button type="submit">Ghi nhận sự kiện</button>
+            </form>
+        </div>
     </div>
 
 </body>

@@ -29,13 +29,12 @@ public class HealthBlogService {
 
     // Lấy blog theo ID
     public Optional<HealthBlogDTO> getBlogById(Long id) {
-        Optional<HealthBlog> blog = healthBlogRepository.findById(id);
-        if (blog.isPresent() && blog.get().getIsPublished()) {
+        HealthBlog blog = healthBlogRepository.findByIdWithTags(id);
+        if (blog != null && blog.getIsPublished()) {
             // Tăng lượt xem
-            HealthBlog b = blog.get();
-            b.setViewCount(b.getViewCount() + 1);
-            healthBlogRepository.save(b);
-            return Optional.of(new HealthBlogDTO(b));
+            blog.setViewCount(blog.getViewCount() + 1);
+            healthBlogRepository.save(blog);
+            return Optional.of(new HealthBlogDTO(blog));
         }
         return Optional.empty();
     }
@@ -121,7 +120,7 @@ public class HealthBlogService {
 
     // Lấy tất cả danh mục blog
     public List<HealthBlog.BlogCategory> getAllCategories() {
-        return healthBlogRepository.findAllCategories();
+        return java.util.Arrays.asList(HealthBlog.BlogCategory.values());
     }
 
     // Lấy tất cả tác giả

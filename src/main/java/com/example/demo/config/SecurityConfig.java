@@ -29,7 +29,7 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails admin = User.withUsername("admin")
                                 .password(passwordEncoder.encode("adminpass")) // Mã hóa mật khẩu
-                                .roles("ADMIN", "MANAGER", "NURSE", "PARENT", "STUDENT") // Gán các vai trò
+                                .roles("ADMIN") // Chỉ gán role ADMIN
                                 .build();
 
         UserDetails nurse = User.withUsername("nurse")
@@ -60,10 +60,12 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll() // Cho phép truy cập tài nguyên tĩnh và trang chủ
-                .requestMatchers("/students/**").hasAnyRole("ADMIN", "MANAGER", "NURSE") // Chỉ admin, manager, nurse được quản lý học sinh
-                .requestMatchers("/medical-records/**").hasAnyRole("ADMIN", "MANAGER", "NURSE", "PARENT") // Cha mẹ cũng có thể quản lý hồ sơ
+                .requestMatchers("/students/**").hasAnyRole("ADMIN", "MANAGER", "NURSE") // Admin, manager, nurse được quản lý học sinh
+                .requestMatchers("/health-documents/**").hasAnyRole("ADMIN", "MANAGER", "NURSE") // Admin, manager, nurse được quản lý tài liệu
+                .requestMatchers("/health-blogs/**").hasAnyRole("ADMIN", "MANAGER", "NURSE") // Admin, manager, nurse được quản lý blog
+                .requestMatchers("/medical-records/**").hasAnyRole("MANAGER", "NURSE", "PARENT") // Manager, nurse, parent quản lý hồ sơ
                 .requestMatchers("/manager/**").hasAnyRole("MANAGER")
-                .requestMatchers("/nurse/**").hasAnyRole("NURSE", "ADMIN", "MANAGER")
+                .requestMatchers("/nurse/**").hasAnyRole("NURSE", "MANAGER")
                 .requestMatchers("/parent/**").hasRole("PARENT")
                 .anyRequest().authenticated() // Tất cả các request khác yêu cầu xác thực
             )
@@ -73,8 +75,9 @@ public class SecurityConfig {
                 .permitAll() // Cho phép tất cả mọi người truy cập trang login
             )
             .logout(logout -> logout
-                .permitAll() // Cho phép tất cả mọi người logout
+                .logoutUrl("/logout") // URL để logout
                 .logoutSuccessUrl("/") // Sau khi logout, chuyển về trang chủ
+                .permitAll() // Cho phép tất cả mọi người logout
             )
             .csrf(csrf -> csrf.disable()); // Tạm thời tắt CSRF để dễ phát triển, trong sản phẩm thì KHÔNG NÊN làm vậy
 

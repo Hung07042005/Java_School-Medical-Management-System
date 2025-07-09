@@ -80,6 +80,7 @@
     </style>
 </head>
 <body>
+<div sec:authorize="hasRole('PARENT')">
 <div class="container">
     <h2>👨‍👩‍👧‍👦 Thông tin phụ huynh</h2>
 
@@ -129,6 +130,7 @@
        
         <a th:href="@{/students}" class="btn">← Quay lại danh sách học sinh</a>
     
+</div>
 </div>
 </body>
 </html>

@@ -12,13 +12,13 @@ public class HealthDocument {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "NVARCHAR(255)")
     private String title; // Tiêu đề tài liệu
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "NTEXT")
     private String content; // Nội dung tài liệu
 
-    @Column(length = 500)
+    @Column(length = 500, columnDefinition = "NVARCHAR(500)")
     private String summary; // Tóm tắt ngắn gọn
 
     @Enumerated(EnumType.STRING)
@@ -27,16 +27,16 @@ public class HealthDocument {
     @Enumerated(EnumType.STRING)
     private DocumentType type; // Loại tài liệu
 
-    @Column(length = 100)
+    @Column(length = 100, columnDefinition = "NVARCHAR(100)")
     private String author; // Tác giả
 
-    @Column(length = 200)
+    @Column(length = 200, columnDefinition = "NVARCHAR(200)")
     private String source; // Nguồn tài liệu
 
-    @Column(length = 200)
+    @Column(length = 200, columnDefinition = "NVARCHAR(200)")
     private String fileUrl; // Đường dẫn file đính kèm (nếu có)
 
-    @Column(length = 50)
+    @Column(length = 50, columnDefinition = "NVARCHAR(50)")
     private String fileType; // Loại file (PDF, DOC, etc.)
 
     private Integer viewCount = 0; // Số lượt xem

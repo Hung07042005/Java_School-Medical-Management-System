@@ -10,9 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.PageImpl;
 
 @Service
 public class HealthDocumentService {
@@ -22,71 +24,158 @@ public class HealthDocumentService {
 
     // Lấy tất cả tài liệu có phân trang
     public Page<HealthDocumentDTO> getAllDocuments(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByIsPublishedTrue(pageable);
-        return documents.map(HealthDocumentDTO::new);
+        // Lấy tất cả documents với tags
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByIsPublishedTrueWithTags();
+        
+        // Sắp xếp theo createdAt giảm dần
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        // Xử lý pagination thủ công
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        // Tạo Page object
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HealthDocumentDTO> result = new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
+        
+        return result;
     }
 
     // Lấy tài liệu theo ID
     public Optional<HealthDocumentDTO> getDocumentById(Long id) {
-        Optional<HealthDocument> document = healthDocumentRepository.findById(id);
-        if (document.isPresent() && document.get().getIsPublished()) {
+        HealthDocument document = healthDocumentRepository.findByIdWithTags(id);
+        if (document != null && document.getIsPublished()) {
             // Tăng lượt xem
-            HealthDocument doc = document.get();
-            doc.setViewCount(doc.getViewCount() + 1);
-            healthDocumentRepository.save(doc);
-            return Optional.of(new HealthDocumentDTO(doc));
+            document.setViewCount(document.getViewCount() + 1);
+            healthDocumentRepository.save(document);
+            return Optional.of(new HealthDocumentDTO(document));
         }
         return Optional.empty();
     }
 
     // Tìm kiếm tài liệu theo từ khóa
     public Page<HealthDocumentDTO> searchDocuments(String keyword, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.searchByKeyword(keyword, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.searchByKeywordWithTags(keyword);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu theo danh mục
     public Page<HealthDocumentDTO> getDocumentsByCategory(HealthDocument.DocumentCategory category, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByCategoryAndIsPublishedTrue(category, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByCategoryAndIsPublishedTrueWithTags(category);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu theo loại
     public Page<HealthDocumentDTO> getDocumentsByType(HealthDocument.DocumentType type, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByTypeAndIsPublishedTrue(type, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByTypeAndIsPublishedTrueWithTags(type);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu theo tác giả
     public Page<HealthDocumentDTO> getDocumentsByAuthor(String author, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByAuthorContainingIgnoreCaseAndIsPublishedTrue(author, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByAuthorContainingIgnoreCaseAndIsPublishedTrueWithTags(author);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu theo tag
     public Page<HealthDocumentDTO> getDocumentsByTag(String tag, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByTagContaining(tag, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByTagContainingWithTags(tag);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu nổi bật (theo lượt xem)
     public Page<HealthDocumentDTO> getPopularDocuments(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("viewCount").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByIsPublishedTrue(pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByIsPublishedTrueWithTags();
+        allDocuments.sort((a, b) -> b.getViewCount().compareTo(a.getViewCount()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu có file đính kèm
     public Page<HealthDocumentDTO> getDocumentsWithFiles(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByFileUrlIsNotNullAndIsPublishedTrue(pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByFileUrlIsNotNullAndIsPublishedTrueWithTags();
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tài liệu theo danh mục và loại
@@ -94,9 +183,19 @@ public class HealthDocumentService {
             HealthDocument.DocumentCategory category, 
             HealthDocument.DocumentType type, 
             int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-        Page<HealthDocument> documents = healthDocumentRepository.findByCategoryAndTypeAndIsPublishedTrue(category, type, pageable);
-        return documents.map(HealthDocumentDTO::new);
+        List<HealthDocument> allDocuments = healthDocumentRepository.findByCategoryAndTypeAndIsPublishedTrueWithTags(category, type);
+        allDocuments.sort((a, b) -> b.getCreatedAt().compareTo(a.getCreatedAt()));
+        
+        int start = page * size;
+        int end = Math.min(start + size, allDocuments.size());
+        List<HealthDocument> pageContent = allDocuments.subList(start, end);
+        
+        Pageable pageable = PageRequest.of(page, size);
+        return new PageImpl<>(
+            pageContent.stream().map(HealthDocumentDTO::new).collect(Collectors.toList()),
+            pageable,
+            allDocuments.size()
+        );
     }
 
     // Lấy tất cả danh mục
@@ -111,26 +210,46 @@ public class HealthDocumentService {
 
     // Tạo tài liệu mới
     public HealthDocumentDTO createDocument(HealthDocumentDTO documentDTO) {
-        HealthDocument document = new HealthDocument();
-        document.setTitle(documentDTO.getTitle());
-        document.setContent(documentDTO.getContent());
-        document.setSummary(documentDTO.getSummary());
-        document.setAuthor(documentDTO.getAuthor());
-        document.setSource(documentDTO.getSource());
-        document.setFileUrl(documentDTO.getFileUrl());
-        document.setFileType(documentDTO.getFileType());
-        document.setTags(documentDTO.getTags());
-        document.setIsPublished(documentDTO.getIsPublished() != null ? documentDTO.getIsPublished() : true);
+        try {
+            System.out.println("Service: Creating document with title: " + documentDTO.getTitle());
+            
+            HealthDocument document = new HealthDocument();
+            document.setTitle(documentDTO.getTitle());
+            document.setContent(documentDTO.getContent());
+            document.setSummary(documentDTO.getSummary());
+            document.setAuthor(documentDTO.getAuthor());
+            document.setSource(documentDTO.getSource());
+            document.setFileUrl(documentDTO.getFileUrl());
+            document.setFileType(documentDTO.getFileType());
+            
+            // Xử lý tags
+            if (documentDTO.getTags() != null) {
+                document.setTags(documentDTO.getTags());
+            } else {
+                document.setTags(new ArrayList<>());
+            }
+            
+            document.setIsPublished(documentDTO.getIsPublished() != null ? documentDTO.getIsPublished() : true);
 
-        if (documentDTO.getCategory() != null) {
-            document.setCategory(HealthDocument.DocumentCategory.valueOf(documentDTO.getCategory()));
-        }
-        if (documentDTO.getType() != null) {
-            document.setType(HealthDocument.DocumentType.valueOf(documentDTO.getType()));
-        }
+            if (documentDTO.getCategory() != null) {
+                System.out.println("Service: Setting category: " + documentDTO.getCategory());
+                document.setCategory(HealthDocument.DocumentCategory.valueOf(documentDTO.getCategory()));
+            }
+            if (documentDTO.getType() != null) {
+                System.out.println("Service: Setting type: " + documentDTO.getType());
+                document.setType(HealthDocument.DocumentType.valueOf(documentDTO.getType()));
+            }
 
-        HealthDocument savedDocument = healthDocumentRepository.save(document);
-        return new HealthDocumentDTO(savedDocument);
+            System.out.println("Service: Saving document to database...");
+            HealthDocument savedDocument = healthDocumentRepository.save(document);
+            System.out.println("Service: Document saved with ID: " + savedDocument.getId());
+            
+            return new HealthDocumentDTO(savedDocument);
+        } catch (Exception e) {
+            System.err.println("Service: Error creating document: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     // Cập nhật tài liệu
@@ -145,7 +264,14 @@ public class HealthDocumentService {
             document.setSource(documentDTO.getSource());
             document.setFileUrl(documentDTO.getFileUrl());
             document.setFileType(documentDTO.getFileType());
-            document.setTags(documentDTO.getTags());
+            
+            // Xử lý tags
+            if (documentDTO.getTags() != null) {
+                document.setTags(documentDTO.getTags());
+            } else {
+                document.setTags(new ArrayList<>());
+            }
+            
             document.setIsPublished(documentDTO.getIsPublished());
 
             if (documentDTO.getCategory() != null) {

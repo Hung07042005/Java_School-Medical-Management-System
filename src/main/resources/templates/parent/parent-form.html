@@ -67,6 +67,7 @@
 </head>
 <body>
 
+<div sec:authorize="hasRole('PARENT')">
 <div class="form-container">
     <h2 th:text="${parent.id != null} ? '✏️ Chỉnh sửa thông tin phụ huynh' : '➕ Thêm phụ huynh cho học sinh'">Phụ huynh</h2>
 
@@ -96,6 +97,7 @@
     </form>
 
     <a th:href="@{/students}" class="back-link">← Quay lại danh sách học sinh</a>
+</div>
 </div>
 
 </body>

@@ -12,16 +12,16 @@ public class HealthBlog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "NVARCHAR(255)")
     private String title; // Tiêu đề bài viết
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "NTEXT")
     private String content; // Nội dung bài viết
 
-    @Column(length = 500)
+    @Column(length = 500, columnDefinition = "NVARCHAR(500)")
     private String summary; // Tóm tắt bài viết
 
-    @Column(length = 200)
+    @Column(length = 200, columnDefinition = "NVARCHAR(200)")
     private String author; // Tác giả
 
     @Enumerated(EnumType.STRING)

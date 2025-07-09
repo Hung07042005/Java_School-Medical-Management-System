@@ -67,6 +67,7 @@
 </head>
 <body>
 
+<div sec:authorize="hasRole('PARENT')">
 <div class="form-container">
     <h2>✏️ Chỉnh sửa phụ huynh</h2>
 
@@ -93,6 +94,7 @@
     </form>
 
     <a th:href="@{/students}" class="back-link">← Quay lại danh sách</a>
+</div>
 </div>
 
 </body>
