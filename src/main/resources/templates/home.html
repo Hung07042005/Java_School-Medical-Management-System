@@ -539,6 +539,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row g-4 mt-4" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
             <div class="col-lg-4 col-md-6"sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
                 <div class="feature-card text-center">
@@ -583,6 +584,7 @@
                 </div>
             </div>
         </div>
+    <div class="row g-4 mt-4" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
           <!-- ADMIN, MANAGER, NURSE: Tạo đợt tiêm -->
         <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
             <div class="feature-card text-center">
@@ -616,7 +618,7 @@
         </div>
 
     <!-- PARENT: Xác nhận tiêm -->
-        {% comment %} <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')"> {% endcomment %}
+        <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
             <div class="feature-card text-center">
                 <div class="feature-icon mx-auto">
                     <i class="fas fa-check-square"></i>
@@ -646,6 +648,7 @@
                 </a>
             </div>
         </div>
+    </div>
         <!-- About Section -->
         <div class="row mt-5">
             <div class="col-12">
