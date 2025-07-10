@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Xác nhận tiêm</title>
+  <style>
+    body { font-family: 'Segoe UI'; background: #f5f5f5; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; }
+    .btn { background: #2b6777; color: white; padding: 10px 20px; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Xác nhận tiêm cho học sinh</h2>
+
+  <form th:action="@{/vaccination/consent/save}" method="post" th:object="${consent}">
+    <input type="hidden" th:field="*{id}" />
+    <input type="hidden" th:field="*{vaccinationStudent.id}" />
+
+    <p><strong>Học sinh:</strong> <span th:text="*{vaccinationStudent.student.fullName}"></span></p>
+    <p><strong>Vắc-xin:</strong> <span th:text="*{vaccinationStudent.vaccine.vaccineName}"></span></p>
+    <p><strong>Ngày tiêm:</strong> <span th:text="*{vaccinationStudent.vaccine.vaccineDate}"></span></p>
+
+    <div>
+      <label><input type="radio" th:field="*{parentAgreed}" value="true" required/> Đồng ý</label>
+      <label><input type="radio" th:field="*{parentAgreed}" value="false" required/> Từ chối</label>
+    </div>
+
+    <div>
+      <label>Ghi chú:</label>
+      <textarea th:field="*{note}" rows="3" style="width: 100%;"></textarea>
+    </div>
+
+    <button type="submit" class="btn">Gửi xác nhận</button>
+  </form>
+</div>
+</body>
+</html>

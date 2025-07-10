@@ -154,46 +154,41 @@
 </head>
 <body>
   <div class="container">
-    <h2>📋 Danh sách chiến dịch tiêm chủng</h2>
+    <h2>📋 Danh sách đợt tiêm chủng</h2>
 
-    <a th:href="@{/campaigns/new}" class="btn btn-primary" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">➕ Thêm chiến dịch</a>
+    <a th:href="@{/vaccines/new}" class="btn btn-primary" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">➕ Thêm đợt tiêm</a>
 
     <table>
       <thead>
         <tr>
           <th>STT</th>
-          <th>Tên chiến dịch</th>
-          <th>Ngày bắt đầu</th>
-          <th>Ngày kết thúc</th>
-          <th>Ghi chú</th>
+          <th>Tên vắc-xin</th>
+          <th>Ngày tiêm</th>
+          <th>Lô vắc-xin</th>
+          <th>Số lượng học sinh</th>
           <th>Thao tác</th>
         </tr>
       </thead>
       <tbody>
-        <tr th:each="campaign, iterStat : ${campaigns}">
+        <tr th:each="vaccine, iterStat : ${vaccines}">
           <td th:text="${iterStat.index + 1}"></td>
-
-          <!-- Link tên chiến dịch -->
           <td>
-            <a th:href="@{'/vaccinations/campaign/' + ${campaign.id}}"
-   th:text="${campaign.campaignName}" class="campaign-link"></a>
-
-
+            <a th:href="@{'/vaccines/' + ${vaccine.id} + '/students'}"
+               th:text="${vaccine.vaccineName}" class="campaign-link"></a>
           </td>
-
-          <td th:text="${campaign.startDate}"></td>
-          <td th:text="${campaign.endDate}"></td>
-          <td th:text="${campaign.note}"></td>
-
+          <td th:text="${vaccine.vaccineDate}"></td>
+          <td th:text="${vaccine.vaccineBatch}"></td>
+          <td th:text="${vaccine.participants.size()} + ' học sinh'"></td>
           <td>
-            <a th:href="@{'/campaigns/edit/' + ${campaign.id}}" class="btn btn-warning" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" >Sửa</a>
-            <a th:href="@{'/campaigns/delete/' + ${campaign.id}}" class="btn btn-danger"
-               onclick="return confirm('Bạn có chắc chắn muốn xóa chiến dịch này?')" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')" >Xóa</a>
+            <a th:href="@{'/vaccines/edit/' + ${vaccine.id}}" class="btn btn-warning" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">Sửa</a>
+            <a th:href="@{'/vaccines/delete/' + ${vaccine.id}}" class="btn btn-danger"
+               onclick="return confirm('Bạn có chắc chắn muốn xóa đợt tiêm này?')" sec:authorize="hasAnyRole('ADMIN', 'MANAGER')">Xóa</a>
           </td>
         </tr>
       </tbody>
     </table>
-    <a th:href="@{/}" class="btn btn-back " style="background-color:#777;">← Quay lại</a>
+
+    <a th:href="@{/}" class="btn btn-back" style="background-color:#777;">← Quay lại</a>
   </div>
 </body>
 </html>

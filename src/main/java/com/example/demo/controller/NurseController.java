@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.MedicalEvent;
-import com.example.demo.model.Medicine;
 import com.example.demo.service.MedicalEventService;
 import com.example.demo.repository.MedicineRepository;
 

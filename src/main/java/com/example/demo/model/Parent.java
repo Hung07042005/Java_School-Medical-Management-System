@@ -1,4 +1,4 @@
-// src/main/java/com/example/demo/model/Parent.java
+
 package com.example.demo.model;
 
 import java.util.ArrayList;

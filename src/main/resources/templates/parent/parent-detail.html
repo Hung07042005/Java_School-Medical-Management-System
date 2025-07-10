@@ -88,13 +88,7 @@
         <p><strong>Email:</strong> <span th:text="${parent.email}"></span></p>
         <p><strong>Số điện thoại:</strong> <span th:text="${parent.phoneNumber}"></span></p>
         <div class="btn-group">
-            <a th:href="@{/parents/edit/{id}(id=${parent.id})}" class="btn btn-edit">Chỉnh sửa</a>
-
-            <form th:action="@{/parents/delete/{id}(id=${parent.id})}" method="post" 
-                  onsubmit="return confirm('Bạn có chắc chắn muốn xóa phụ huynh này không?');"
-                  style="display: inline;">
-                <button type="submit" class="btn btn-delete">Xóa</button>
-            </form>
+            <a th:href="@{/parents/edit/{id}(id=${parent.id})}" class="btn btn-edit" sec:authorize="hasRole('MANAGER')">Chỉnh sửa</a>
             
         </div>
     </div>

@@ -311,7 +311,7 @@
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('MANAGER')">
-                        <a class="nav-link" th:href="@{/campaigns}">
+                        <a class="nav-link" th:href="@{/vaccines}">
                             <i class="fas fa-syringe me-1"></i>Quản lý Chiến dịch Tiêm chủng
                         </a>
                     </li>
@@ -326,12 +326,12 @@
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('NURSE')">
-                        <a class="nav-link" th:href="@{/campaigns}">
+                        <a class="nav-link" th:href="@{/vaccines}">
                             <i class="fas fa-syringe me-1"></i>Xem Chiến dịch Tiêm chủng
                         </a>
                     </li>
                     <li class="nav-item" sec:authorize="hasRole('NURSE')">
-                        <a class="nav-link" th:href="@{/vaccinations}">
+                        <a class="nav-link" th:href="@{/}">
                             <i class="fas fa-vaccine me-1"></i>Ghi nhận Tiêm chủng
                         </a>
                     </li>
@@ -555,7 +555,7 @@
                         Tạo và quản lý các chiến dịch tiêm chủng, lập kế hoạch 
                         và theo dõi tiến độ tiêm chủng cho học sinh.
                     </p>
-                    <a th:href="@{/campaigns}" class="feature-link">
+                    <a th:href="@{/vaccines}" class="feature-link">
                         Quản lý chiến dịch <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -615,7 +615,7 @@
                         Xem thông tin các chiến dịch tiêm chủng được lập kế hoạch, 
                         theo dõi lịch trình và chuẩn bị cho việc tiêm chủng.
                     </p>
-                    <a th:href="@{/campaigns}" class="feature-link">
+                    <a th:href="@{/vaccines}" class="feature-link">
                         Xem chiến dịch <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
@@ -638,7 +638,107 @@
                 </div>
             </div>
         </div>
+        <div class="row g-4 mt-4" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE', 'PARENT')">
+          <!-- ADMIN, MANAGER, NURSE: Tạo đợt tiêm -->
+            <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-plus-circle"></i>
+                    </div>
+                    <h3 class="feature-title">Tạo đợt tiêm chủng</h3>
+                    <p class="feature-description">
+                        Tạo và quản lý các đợt tiêm chủng cho học sinh trong trường.
+                    </p>
+                    <a th:href="@{/vaccines/new}" class="btn btn-primary">
+                        Tạo mới <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
 
+        <!-- ADMIN, MANAGER, NURSE: Danh sách đợt tiêm -->
+            <div class="col-lg-4 col-md-6" sec:authorize="hasAnyRole('ADMIN', 'MANAGER', 'NURSE')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Danh sách đợt tiêm</h3>
+                    <p class="feature-description">
+                        Xem và theo dõi chi tiết các đợt tiêm chủng đã được tổ chức.
+                    </p>
+                    <a th:href="@{/vaccines}" class="btn btn-primary">
+                        Xem danh sách <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        <!-- PARENT: Xác nhận tiêm -->
+            <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-check-square"></i>
+                    </div>
+                    <h3 class="feature-title">Xác nhận tiêm chủng</h3>
+                    <p class="feature-description">
+                        Phụ huynh xác nhận đồng ý hoặc từ chối tiêm cho con em.
+                    </p>
+                    <a th:href="@{'/' + ${parentId}}" class="btn btn-warning">
+                        Xác nhận ngay <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+        <!-- PARENT: Xem kết quả tiêm -->
+            <div class="col-lg-4 col-md-6" sec:authorize="hasRole('PARENT')">
+                <div class="feature-card text-center">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-syringe"></i>
+                    </div>
+                    <h3 class="feature-title">Kết quả tiêm chủng của con</h3>
+                    <p class="feature-description">
+                        Xem thông tin vắc-xin, phản ứng sau tiêm và tình trạng sức khỏe của con.
+                    </p>
+                    <a th:href="@{'/' + ${parent.id}}" class="btn btn-success">
+                        Xem kết quả <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+            <!-- About Section -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="feature-card">
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <h2 class="feature-title">Về Hệ thống Y tế Học đường</h2>
+                                <p class="feature-description">
+                                    Hệ thống quản lý y tế học đường được thiết kế để đảm bảo sức khỏe 
+                                    và an toàn cho học sinh. Chúng tôi cung cấp các giải pháp toàn diện 
+                                    cho việc quản lý sức khỏe học đường, từ việc theo dõi sức khỏe hàng ngày 
+                                    đến quản lý các chiến dịch tiêm chủng quy mô lớn.
+                                </p>
+                                <div class="d-flex gap-3">
+                                    <div class="text-center">
+                                        <i class="fas fa-shield-alt text-success fs-3"></i>
+                                        <div class="mt-2"><small>An toàn</small></div>
+                                    </div>
+                                    <div class="text-center">
+                                        <i class="fas fa-clock text-primary fs-3"></i>
+                                        <div class="mt-2"><small>24/7</small></div>
+                                    </div>
+                                    <div class="text-center">
+                                        <i class="fas fa-user-md text-warning fs-3"></i>
+                                        <div class="mt-2"><small>Chuyên nghiệp</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="/images/main-slider-2.jpg" alt="Medical Care" class="img-fluid rounded-3" style="max-height: 300px; object-fit: cover;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- About Section -->
         <div class="row mt-5">
             <div class="col-12">

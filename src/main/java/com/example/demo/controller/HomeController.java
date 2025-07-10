@@ -16,4 +16,9 @@ public class HomeController {
     public String login() {
         return "login"; // Trả về template login.html
     }
+
+    @GetMapping("/logout")
+    public String logout() {
+        return "redirect:/"; // Redirect về trang chủ sau khi logout
+    }
 }

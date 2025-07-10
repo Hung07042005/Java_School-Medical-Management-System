@@ -7,7 +7,6 @@ import java.time.LocalDate;
 // Nó không bao gồm các trường nhạy cảm như password nếu không cần thiết.
 public class StudentDTO {
     private Long id; // Dùng cho trường hợp sửa (edit), có thể null khi thêm mới
-    private String username;
     private String fullName;
     private String email;
     private String phoneNumber;
@@ -18,10 +17,9 @@ public class StudentDTO {
     // Constructors
     public StudentDTO() {}
 
-    public StudentDTO(Long id, String username, String fullName, String email, String phoneNumber,
+    public StudentDTO(Long id, String fullName, String email, String phoneNumber,
                       String studentId, LocalDate dateOfBirth, String studentClass) {
         this.id = id;
-        this.username = username;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -37,14 +35,6 @@ public class StudentDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFullName() {

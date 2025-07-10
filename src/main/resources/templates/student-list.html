@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Danh sách học sinh</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <style>
         body {
         font-family: 'Segoe UI', sans-serif;
@@ -181,13 +182,14 @@
                 class="parent-name">
                 </a>
                 <a th:if="${student.parent == null}"
+                        sec:authorize="hasRole('MANAGER')"
                         th:href="@{/parents/new/{studentId}(studentId=${student.id})}"
                         class="btn btn-primary btn-sm">
                          Thêm
                 </a>
             </td>
 
-            <td data-label="Thao tác">
+            <td data-label="Thao tác" sec:authorize="hasRole('MANAGER')">
                 <div class="action-buttons">
                     <a th:href="@{/students/edit/{id}(id=${student.id})}" class="btn btn-warning btn-sm">Sửa</a>
 
@@ -195,8 +197,6 @@
                         onsubmit="return confirm('Bạn có chắc chắn muốn xóa học sinh này?');">
                         <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                     </form>
-
-                    
                 </div>
             </td>
             </tr>
@@ -209,4 +209,4 @@
         <a th:href="@{/}" class="btn" style="margin-top: 20px; background-color:#777;">← Quay lại</a>
     </div>
     </body>
-    </html>
+    </html> 

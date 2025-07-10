@@ -9,9 +9,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.CascadeType;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-
 @Entity
 @Table(name = "students")
 public class Student extends User { // Kế thừa từ User
@@ -22,11 +20,8 @@ public class Student extends User { // Kế thừa từ User
 
     private String studentClass; // Lớp học (ví dụ: "10A1")
 
-    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)//orphanRemoval = true: xoa cha con bi xoa theo (mo coi)
     private MedicalRecord medicalRecord; // Mỗi học sinh có một hồ sơ sức khỏe
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Vaccination> vaccinations = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -79,15 +74,6 @@ public class Student extends User { // Kế thừa từ User
         if (medicalRecord != null) {
             medicalRecord.setStudent(this);
         }
-    }
-    public void addVaccination(Vaccination vaccination) {
-        vaccinations.add(vaccination);
-        vaccination.setStudent(this);
-    }
-
-    public void removeVaccination(Vaccination vaccination) {
-        vaccinations.remove(vaccination);
-        vaccination.setStudent(null);
     }
     public Parent getParent() {
         return parent;

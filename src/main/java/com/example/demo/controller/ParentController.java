@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.text.Normalizer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,12 @@ public class ParentController {
 
         // Gán lại student cũ vào parent mới
         parent.setChildren(existingParent.getChildren());
+        String defaultUsername = Normalizer.normalize(parent.getFullName(), Normalizer.Form.NFD)
+            .replaceAll("\\p{M}", "")
+            .replaceAll("[^a-zA-Z0-9]", "")
+            .toLowerCase(); //xoa dau tieng viet
+            parent.setUsername(defaultUsername);
+        parent.setPassword("temp_password");
         parentService.saveParent(parent);
 
         redirectAttributes.addFlashAttribute("message", "Cập nhật phụ huynh thành công!");
@@ -69,7 +76,14 @@ public class ParentController {
                             RedirectAttributes redirectAttributes) {
         Student student = studentService.getStudentById(studentId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy học sinh"));
-
+        if (parent.getId() == null) {
+            String defaultUsername = Normalizer.normalize(parent.getFullName(), Normalizer.Form.NFD)
+            .replaceAll("\\p{M}", "")
+            .replaceAll("[^a-zA-Z0-9]", "")
+            .toLowerCase(); //xoa dau tieng viet
+            parent.setUsername(defaultUsername);
+            parent.setPassword("temp_password"); 
+        }                         
         // Lưu phụ huynh
         Parent savedParent = parentService.saveParent(parent);
 
@@ -94,13 +108,7 @@ public class ParentController {
         return "parent/parent-detail"; 
     }
     
-    // xoa phu huynh
-    @PostMapping("/delete/{id}")
-    public String deleteParent(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        parentService.deleteParentByID(id);
-        redirectAttributes.addFlashAttribute("message", "Xóa phụ huynh thành công!");
-        return "redirect:/students";
-    }
+    
 
 
     
